@@ -55,8 +55,9 @@ public class KoreDaoImpl implements KoreDao {
     @Override
     public Kore getKoreById(int id) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_ALL_KORE_BY_OWNER_ID, new KoreMapper(), id);
+            return jdbcTemplate.queryForObject(SQL_SELECT_ALL_KORE_BY_KORE_ID, new KoreMapper(), id);
         } catch (Exception e) {
+            this.logException("Tried to find a kore w/ this id " + id,e);
             return null;
         }
     }
@@ -88,9 +89,9 @@ public class KoreDaoImpl implements KoreDao {
     public static String SQL_SELECT_ALL_KORE_BY_NAME = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
             + "WHERE k.name LIKE %?%";
-    
+
     @Override
-    public List<Kore> getKoreByName(String name){
+    public List<Kore> getKoreByName(String name) {
         return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), name);
     }
 
@@ -99,14 +100,24 @@ public class KoreDaoImpl implements KoreDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ";
+
     @Override
     public List<Owner> getAllOwners() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_SELECT_ALL_OWNERS, new OwnerMapper());
     }
+
+    public static String SQL_SELECT_OWNER_BY_ID = "SELECT * FROM public.\"owners\" AS o "
+            + "WHERE o.id = ?";
 
     @Override
     public Owner getOwnerById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_OWNER_BY_ID, new OwnerMapper(), id);
+        } catch (Exception e) {
+            this.logException("Tried to find an owner w/ this id " + id,e);
+            return null;
+        }
     }
 
     @Override
@@ -114,16 +125,22 @@ public class KoreDaoImpl implements KoreDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    
+    public static String SQL_UPDATE_KORE_OWNER = "UPDATE public.\"kore\" AS k "
+            + " SET k.ownerid = ? "
+            + " WHERE k.id = ? ";
+    
     @Override
     public void assignNewOwner(int koreId, int ownerId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_KORE_OWNER, ownerId, koreId);
     }
 
     @Override
     public Owner deleteOwner(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     private static final class KoreMapper implements RowMapper<Kore> {
 //        CREATE TABLE public.kore
 //        (
@@ -149,4 +166,32 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
 
+    private static final class OwnerMapper implements RowMapper<Owner> {
+//        CREATE TABLE public.kore
+//        (
+//            id bigint NOT NULL,
+//            name text COLLATE pg_catalog."default" NOT NULL,
+//            breed text COLLATE pg_catalog."default",
+//            pic text COLLATE pg_catalog."default",
+//            CONSTRAINT kore_pkey PRIMARY KEY (id)
+
+        @Override
+        public Owner mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Owner o = new Owner();
+            o.setId(rs.getInt("ownerid"));
+            o.setName(rs.getString("owner"));
+            return o;
+        }
+    }
+
+    private void logException(String header, Exception e) {
+        System.out.println(" ====================== BGN DAO EXCEPTION LOG ====================== ");
+        System.out.println(header);
+        System.out.println(" -------- Message -------- ");
+        System.out.println(e.getMessage());
+        System.out.println(" -------- Stack Trace -------- ");
+        System.out.println(e.getStackTrace());
+        System.out.println(" ====================== END DAO EXCEPTION LOG ====================== ");
+
+    }
 }

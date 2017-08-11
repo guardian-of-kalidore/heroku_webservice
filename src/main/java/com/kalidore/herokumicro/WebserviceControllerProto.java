@@ -42,17 +42,51 @@ public class WebserviceControllerProto {
         resetHerd();
     }
 
-    @RequestMapping(value = "/kore/all", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Kore> allTheKore() {
-        return dao.getAllKore();
-    }
-
+    /*
+    *   ___   _  _______  ______    _______           ______    _______  _______  ______          
+    *  |   | | ||       ||    _ |  |       |         |    _ |  |       ||   _   ||      |         
+    *  |   |_| ||   _   ||   | ||  |    ___|   ____  |   | ||  |    ___||  |_|  ||  _    |        
+    *  |      _||  | |  ||   |_||_ |   |___   |____| |   |_||_ |   |___ |       || | |   |        
+    *  |     |_ |  |_|  ||    __  ||    ___|         |    __  ||    ___||       || |_|   |        
+    *  |    _  ||       ||   |  | ||   |___          |   |  | ||   |___ |   _   ||       |        
+    *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
+    * 
+    */
+    
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Kore getKoreById(@PathVariable int id) {
         return dao.getKoreById(id);
     }
+    
+    @RequestMapping(value = "/kore/all", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Kore> allTheKore() {
+        return dao.getAllKore();
+    }
+    
+    @RequestMapping(value = "/kore/owner/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Kore> getKoreByOwnerId(@PathVariable int id) {
+        return dao.getOwnerKore(id);
+    }
+    
+    @RequestMapping(value = "/kore/name/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Kore> getKoreByName(@PathVariable String name) {
+        return dao.getKoreByName(name);
+    }
+    
+    /*
+    *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
+    *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   
+    *  |   |_| ||   _   ||   | ||  |    ___|   ____  | || || ||   | ||  |   ||_     _||    ___|   
+    *  |      _||  | |  ||   |_||_ |   |___   |____| |       ||   |_||_ |   |  |   |  |   |___    
+    *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
+    *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
+    *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
+    */
+    
     
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
@@ -75,17 +109,17 @@ public class WebserviceControllerProto {
         dao.assignNewOwner(id, ownerId);
     }
     
-    @RequestMapping(value = "/kore/owner/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Kore> getKoreByOwnerId(@PathVariable int id) {
-        return dao.getOwnerKore(id);
-    }
-    
-    @RequestMapping(value = "/kore/name/{name}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Kore> getKoreByName(@PathVariable String name) {
-        return dao.getKoreByName(name);
-    }
+
+    /*
+    *  _______  _     _  __    _  _______  ______             ______    _______  _______  ______       
+    * |       || | _ | ||  |  | ||       ||    _ |           |    _ |  |       ||   _   ||      |      
+    * |   _   || || || ||   |_| ||    ___||   | ||     ____  |   | ||  |    ___||  |_|  ||  _    |     
+    * |  | |  ||       ||       ||   |___ |   |_||_   |____| |   |_||_ |   |___ |       || | |   |     
+    * |  |_|  ||       ||  _    ||    ___||    __  |         |    __  ||    ___||       || |_|   |     
+    * |       ||   _   || | |   ||   |___ |   |  | |         |   |  | ||   |___ |   _   ||       |     
+    * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
+    */
+
     
     @RequestMapping(value = "/owner/all", method = RequestMethod.GET)
     @ResponseBody
@@ -98,6 +132,16 @@ public class WebserviceControllerProto {
     public Owner getOwnerById(@PathVariable int id) {
         return dao.getOwnerById(id);
     }
+    
+    /*
+    *  _______  _     _  __    _  _______  ______             _     _  ______    ___  _______  _______ 
+    * |       || | _ | ||  |  | ||       ||    _ |           | | _ | ||    _ |  |   ||       ||       |
+    * |   _   || || || ||   |_| ||    ___||   | ||     ____  | || || ||   | ||  |   ||_     _||    ___|
+    * |  | |  ||       ||       ||   |___ |   |_||_   |____| |       ||   |_||_ |   |  |   |  |   |___ 
+    * |  |_|  ||       ||  _    ||    ___||    __  |         |       ||    __  ||   |  |   |  |    ___|
+    * |       ||   _   || | |   ||   |___ |   |  | |         |   _   ||   |  | ||   |  |   |  |   |___ 
+    * |_______||__| |__||_|  |__||_______||___|  |_|         |__| |__||___|  |_||___|  |___|  |_______|
+    */
     
     
     
