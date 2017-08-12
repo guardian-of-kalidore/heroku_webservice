@@ -88,7 +88,7 @@ public class KoreDaoImpl implements KoreDao {
 
     public static String SQL_SELECT_ALL_KORE_BY_NAME = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "WHERE k.name LIKE %?%";
+            + "WHERE k.name LIKE '%?%'";
 
     @Override
     public List<Kore> getKoreByName(String name) {
