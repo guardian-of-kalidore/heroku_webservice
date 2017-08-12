@@ -64,7 +64,7 @@ public class KoreDaoImpl implements KoreDao {
 
     public static String SQL_SELECT_RANDOM_KORE = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "ORDER BY RANDOM LIMIT 1";
+            + "ORDER BY RANDOM() LIMIT 1";
     
     @Override
     public Kore getRandomKore() {
