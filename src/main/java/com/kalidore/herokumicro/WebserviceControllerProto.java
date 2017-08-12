@@ -79,7 +79,7 @@ public class WebserviceControllerProto {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/kore/random", method = RequestMethod.POST)
+    @RequestMapping(value = "/kore/random", method = RequestMethod.GET)
     public Kore getRandomKore(){
         return dao.getRandomKore();
     }
