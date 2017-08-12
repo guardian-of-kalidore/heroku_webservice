@@ -24,6 +24,8 @@ public interface KoreDao {
     public List<Kore> getKoreByName(String name);
     
     public Kore getKoreById(int id);
+    public Kore getRandomKore();
+    
     public List<Kore> getOwnerKore(Owner owner);
     public List<Kore> getOwnerKore(int ownerId);
     

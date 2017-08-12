@@ -78,6 +78,12 @@ public class WebserviceControllerProto {
         return dao.getKoreByName(name);
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/kore/random", method = RequestMethod.POST)
+    public Kore getRandomKore(){
+        return dao.getRandomKore();
+    }
+    
     /*
     *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
     *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   

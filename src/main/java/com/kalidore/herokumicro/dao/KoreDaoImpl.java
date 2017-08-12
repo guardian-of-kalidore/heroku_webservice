@@ -62,6 +62,20 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
 
+    public static String SQL_SELECT_RANDOM_KORE = "SELECT * FROM public.\"kore\" AS k "
+            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + "ORDER BY RANDOM LIMIT 1";
+    
+    @Override
+    public Kore getRandomKore() {
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_RANDOM_KORE, new KoreMapper());
+        } catch (Exception e) {
+            this.logException("Tried to find a random kore",e);
+            return null;
+        }
+    }
+    
     @Override
     public void updateKoreInfo(Kore kore) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
