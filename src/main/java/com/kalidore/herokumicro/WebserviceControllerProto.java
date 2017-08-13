@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -97,10 +98,10 @@ public class WebserviceControllerProto {
     
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
-    public Kore addNewKore(@RequestBody Map<String, String> paramMap){
+    public Kore addNewKore(HttpServletRequest request){
         System.out.println("Creating a new Kore: ");
-        System.out.println(paramMap.entrySet());
-        Kore kore = this.makeKoreFromMap(paramMap);
+        System.out.println(request.getParameterMap().entrySet());
+        Kore kore = this.makeKoreFromMap(request);
         dao.addKore(kore);
         return kore;
     }
@@ -226,15 +227,16 @@ public class WebserviceControllerProto {
     }
     
     
-    private Kore makeKoreFromMap(Map<String, String> map){
+    private Kore makeKoreFromMap(HttpServletRequest request){
         Kore kore = new Kore();
-        String name = map.get("koreName");
-        String newOwner = map.get("newOwner");
-        String ownerId = map.get("ownerId");
         
-        String picUrl = map.get("picUrl");
-        String breed = map.get("breed");
-        String color = map.get("color");
+        String name = request.getParameter("koreName");
+        String newOwner = request.getParameter("newOwner");
+        String ownerId = request.getParameter("ownerId");
+        
+        String picUrl = request.getParameter("picUrl");
+        String breed = request.getParameter("breed");
+        String color = request.getParameter("color");
         
         if(nullOrEmpty(name) || nullOrEmpty(picUrl))
             return null;
