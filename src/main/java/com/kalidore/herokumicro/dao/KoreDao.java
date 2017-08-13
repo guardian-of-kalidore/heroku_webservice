@@ -16,8 +16,9 @@ import java.util.List;
 public interface KoreDao {
     
     // CREATE
-    public Kore addKore(Kore kore);
-    public Owner addOwner(Owner owner);
+    public void addKore(Kore kore);
+    public void addOwner(Owner owner);
+    public void addOwner(String ownerName);
     
     // READ
     public List<Kore> getAllKore();

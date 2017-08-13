@@ -97,7 +97,8 @@ public class WebserviceControllerProto {
     
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
-    public Kore addNewKore(@RequestBody Kore kore){
+    public Kore addNewKore(@RequestBody Map<String, String> paramMap){
+        Kore kore = this.makeKoreFromMap(paramMap);
         dao.addKore(kore);
         return kore;
     }
@@ -220,5 +221,38 @@ public class WebserviceControllerProto {
         }
 
         return "Try again...";
+    }
+    
+    
+    private Kore makeKoreFromMap(Map<String, String> map){
+        Kore kore = new Kore();
+        String name = map.get("koreName");
+        String newOwner = map.get("newOwner");
+        String ownerId = map.get("ownerId");
+        
+        String picUrl = map.get("picUrl");
+        String breed = map.get("breed");
+        String color = map.get("color");
+        
+        if(nullOrEmpty(name) || nullOrEmpty(picUrl))
+            return null;
+        
+        try{
+            int id = Integer.parseInt(ownerId);
+            Owner o = new Owner();
+            o.setId(id);
+            kore.setOwner(o);
+        }catch(Exception e){
+            System.out.println("Bad ownerId.");
+        }
+        
+        kore.setName(name);
+        kore.setMainPic(picUrl);
+        
+        return kore;
+    }
+    
+    public boolean nullOrEmpty(String testMe){
+        return testMe == null || testMe.isEmpty();
     }
 }

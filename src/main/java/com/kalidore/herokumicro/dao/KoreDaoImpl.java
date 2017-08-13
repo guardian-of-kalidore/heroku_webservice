@@ -36,10 +36,16 @@ public class KoreDaoImpl implements KoreDao {
         jdbcTemplate.setDataSource(dataSource);
     }
 
-    @Override
-    public Kore addKore(Kore kore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    /*
+    *   ___   _  _______  ______    _______           ______    _______  _______  ______          
+    *  |   | | ||       ||    _ |  |       |         |    _ |  |       ||   _   ||      |         
+    *  |   |_| ||   _   ||   | ||  |    ___|   ____  |   | ||  |    ___||  |_|  ||  _    |        
+    *  |      _||  | |  ||   |_||_ |   |___   |____| |   |_||_ |   |___ |       || | |   |        
+    *  |     |_ |  |_|  ||    __  ||    ___|         |    __  ||    ___||       || |_|   |        
+    *  |    _  ||       ||   |  | ||   |___          |   |  | ||   |___ |   _   ||       |        
+    *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
+    * 
+    */
 
     public static String SQL_SELECT_ALL_KORE = "SELECT * FROM public.\"kore\" AS k LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id";
 
@@ -76,6 +82,30 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
     
+    private static String SQL_INSERT_KORE = "INSERT INTO public.\"kore\" "
+            + " (id, name, breed, pic) VALUES (?, ?, ?, ?)";
+    
+    /*
+    *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
+    *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   
+    *  |   |_| ||   _   ||   | ||  |    ___|   ____  | || || ||   | ||  |   ||_     _||    ___|   
+    *  |      _||  | |  ||   |_||_ |   |___   |____| |       ||   |_||_ |   |  |   |  |   |___    
+    *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
+    *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
+    *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
+    */
+    
+    
+    private static String SQL_INSERT_NEW_KORE = "INSERT INTO public.\"kore\" "
+            + " (name, pic, ownerId) VALUES (?, ?, ?)";
+    @Override
+    public void addKore(Kore kore) {
+        jdbcTemplate.update(SQL_INSERT_NEW_KORE,
+                kore.getName(),
+                kore.getMainPic() == null ? null : kore.getMainPic().getUrl(),
+                kore.getOwner() == null ? null : kore.getOwner().getId());
+    }
+    
     @Override
     public void updateKoreInfo(Kore kore) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -109,9 +139,16 @@ public class KoreDaoImpl implements KoreDao {
         return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), name);
     }
 
+    public static String SQL_INSERT_NEW_OWNER = "INSERT INTO public.\"owners\" (owner) VALUES (?)";
+
     @Override
-    public Owner addOwner(Owner owner) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addOwner(Owner owner) {
+        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, owner.getName());
+    }
+    
+    @Override
+    public void addOwner(String ownerName) {
+        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, ownerName);
     }
 
     public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ";
@@ -192,7 +229,7 @@ public class KoreDaoImpl implements KoreDao {
         @Override
         public Owner mapRow(ResultSet rs, int rowNum) throws SQLException {
             Owner o = new Owner();
-            o.setId(rs.getInt("ownerid"));
+            o.setId(rs.getInt("id"));
             o.setName(rs.getString("owner"));
             return o;
         }
