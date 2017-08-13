@@ -96,13 +96,13 @@ public class KoreDaoImpl implements KoreDao {
     }
     
     public static String SQL_SELECT_ALL_KORE_BY_NAME = "SELECT * FROM public.\"kore\" AS k "
-            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "WHERE k.name LIKE '%?%'";
+            + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + " WHERE k.name LIKE ?";
 
     @Override
     public List<Kore> getKoreByName(String name) {
         try{
-            return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), name);
+            return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), "%"+name+"%");
         }  catch (Exception e) {
             this.logException("Tried to find a kore w/ this name " + name, e);
             return null;
