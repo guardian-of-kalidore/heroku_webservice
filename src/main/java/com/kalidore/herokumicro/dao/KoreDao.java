@@ -40,7 +40,7 @@ public interface KoreDao {
     public void assignNewOwner(int koreId, int ownerId);
     
     // DELETE
-    public Kore deleteKore(int id);
-    public Owner deleteOwner(int id);
+    public void deleteKore(int id);
+    public void deleteOwner(int id);
     
 }

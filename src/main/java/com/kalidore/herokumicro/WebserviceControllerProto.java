@@ -41,7 +41,6 @@ public class WebserviceControllerProto {
     
     public WebserviceControllerProto() {
         dao = new KoreDaoImpl();
-        resetHerd();
     }
 
     /*
@@ -163,17 +162,17 @@ public class WebserviceControllerProto {
         error.put("message", e.getMessage());
         return error;
     }
-    
-    @RequestMapping(value = "/reset", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void reset() {
-        resetHerd();
-    }
-    
-    private void resetHerd(){
-        
-    }
 
+    /*
+    *  _______  _______  __    _  _______  ___  _______ 
+    * |       ||       ||  |  | ||       ||   ||       |
+    * |       ||   _   ||   |_| ||    ___||   ||    ___|
+    * |       ||  | |  ||       ||   |___ |   ||   | __ 
+    * |      _||  |_|  ||  _    ||    ___||   ||   ||  |
+    * |     |_ |       || | |   ||   |    |   ||   |_| |
+    * |_______||_______||_|  |__||___|    |___||_______|
+    */
+    
     public static void main(String[] args) throws Exception {
         SpringApplication.run(WebserviceControllerProto.class, args);
     }
@@ -226,6 +225,15 @@ public class WebserviceControllerProto {
         return "Try again...";
     }
     
+    /*
+    *  __   __  _______  ___      _______  _______  ______   
+    * |  | |  ||       ||   |    |       ||       ||    _ |  
+    * |  |_|  ||    ___||   |    |    _  ||    ___||   | ||  
+    * |       ||   |___ |   |    |   |_| ||   |___ |   |_||_ 
+    * |       ||    ___||   |___ |    ___||    ___||    __  |
+    * |   _   ||   |___ |       ||   |    |   |___ |   |  | |
+    * |__| |__||_______||_______||___|    |_______||___|  |_|
+    */
     
     private Kore makeKoreFromMap(HttpServletRequest request){
         Kore kore = new Kore();
@@ -256,7 +264,9 @@ public class WebserviceControllerProto {
         return kore;
     }
     
-    public boolean nullOrEmpty(String testMe){
+    private boolean nullOrEmpty(String testMe){
         return testMe == null || testMe.isEmpty();
     }
+    
+
 }

@@ -45,8 +45,7 @@ public class KoreDaoImpl implements KoreDao {
     *  |    _  ||       ||   |  | ||   |___          |   |  | ||   |___ |   _   ||       |        
     *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
     * 
-    */
-
+     */
     public static String SQL_SELECT_ALL_KORE = "SELECT * FROM public.\"kore\" AS k LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id";
 
     @Override
@@ -63,7 +62,7 @@ public class KoreDaoImpl implements KoreDao {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_ALL_KORE_BY_KORE_ID, new KoreMapper(), id);
         } catch (Exception e) {
-            this.logException("Tried to find a kore w/ this id " + id,e);
+            this.logException("Tried to find a kore w/ this id " + id, e);
             return null;
         }
     }
@@ -71,49 +70,15 @@ public class KoreDaoImpl implements KoreDao {
     public static String SQL_SELECT_RANDOM_KORE = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
             + "ORDER BY RANDOM() LIMIT 1";
-    
+
     @Override
     public Kore getRandomKore() {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_RANDOM_KORE, new KoreMapper());
         } catch (Exception e) {
-            this.logException("Tried to find a random kore",e);
+            this.logException("Tried to find a random kore", e);
             return null;
         }
-    }
-    
-    private static String SQL_INSERT_KORE = "INSERT INTO public.\"kore\" "
-            + " (id, name, breed, pic) VALUES (?, ?, ?, ?)";
-    
-    /*
-    *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
-    *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   
-    *  |   |_| ||   _   ||   | ||  |    ___|   ____  | || || ||   | ||  |   ||_     _||    ___|   
-    *  |      _||  | |  ||   |_||_ |   |___   |____| |       ||   |_||_ |   |  |   |  |   |___    
-    *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
-    *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
-    *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
-    */
-    
-    
-    private static String SQL_INSERT_NEW_KORE = "INSERT INTO public.\"kore\" "
-            + " (name, pic, ownerId) VALUES (?, ?, ?)";
-    @Override
-    public void addKore(Kore kore) {
-        jdbcTemplate.update(SQL_INSERT_NEW_KORE,
-                kore.getName(),
-                kore.getMainPic() == null ? null : kore.getMainPic().getUrl(),
-                kore.getOwner() == null ? null : kore.getOwner().getId());
-    }
-    
-    @Override
-    public void updateKoreInfo(Kore kore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Kore deleteKore(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public static String SQL_SELECT_ALL_KORE_BY_OWNER_ID = "SELECT * FROM public.\"kore\" AS k "
@@ -129,35 +94,80 @@ public class KoreDaoImpl implements KoreDao {
     public List<Kore> getOwnerKore(int ownerId) {
         return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_OWNER_ID, new KoreMapper(), ownerId);
     }
-
+    
     public static String SQL_SELECT_ALL_KORE_BY_NAME = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
             + "WHERE k.name LIKE '%?%'";
 
     @Override
     public List<Kore> getKoreByName(String name) {
-        return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), name);
-    }
-
-    public static String SQL_INSERT_NEW_OWNER = "INSERT INTO public.\"owners\" (owner) VALUES (?)";
-
-    @Override
-    public void addOwner(Owner owner) {
-        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, owner.getName());
+        try{
+            return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_NAME, new KoreMapper(), name);
+        }  catch (Exception e) {
+            this.logException("Tried to find a kore w/ this name " + name, e);
+            return null;
+        }
     }
     
+    /*
+    *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
+    *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   
+    *  |   |_| ||   _   ||   | ||  |    ___|   ____  | || || ||   | ||  |   ||_     _||    ___|   
+    *  |      _||  | |  ||   |_||_ |   |___   |____| |       ||   |_||_ |   |  |   |  |   |___    
+    *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
+    *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
+    *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
+     */
+
+    private static String SQL_INSERT_NEW_KORE = "INSERT INTO public.\"kore\" "
+            + " (name, pic, ownerId) VALUES (?, ?, ?)";
+
     @Override
-    public void addOwner(String ownerName) {
-        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, ownerName);
+    public void addKore(Kore kore) {
+        jdbcTemplate.update(SQL_INSERT_NEW_KORE,
+                kore.getName(),
+                kore.getMainPic() == null ? null : kore.getMainPic().getUrl(),
+                kore.getOwner() == null ? null : kore.getOwner().getId());
     }
 
+    @Override
+    public void updateKoreInfo(Kore kore) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static String SQL_DELETE_KORE_BY_ID = "DELETE FROM public.\"kore\" "
+            + " WHERE id = ?";
+    
+    @Override
+    public void deleteKore(int id) {
+        jdbcTemplate.update(SQL_DELETE_KORE_BY_ID, id);
+    }
+
+    public static String SQL_UPDATE_KORE_OWNER = "UPDATE public.\"kore\" AS k "
+            + " SET k.ownerid = ? "
+            + " WHERE k.id = ? ";
+
+    @Override
+    public void assignNewOwner(int koreId, int ownerId) {
+        jdbcTemplate.update(SQL_UPDATE_KORE_OWNER, ownerId, koreId);
+    }
+    /*
+    *  _______  _     _  __    _  _______  ______             ______    _______  _______  ______       
+    * |       || | _ | ||  |  | ||       ||    _ |           |    _ |  |       ||   _   ||      |      
+    * |   _   || || || ||   |_| ||    ___||   | ||     ____  |   | ||  |    ___||  |_|  ||  _    |     
+    * |  | |  ||       ||       ||   |___ |   |_||_   |____| |   |_||_ |   |___ |       || | |   |     
+    * |  |_|  ||       ||  _    ||    ___||    __  |         |    __  ||    ___||       || |_|   |     
+    * |       ||   _   || | |   ||   |___ |   |  | |         |   |  | ||   |___ |   _   ||       |     
+    * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
+    */
+    
     public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ";
 
     @Override
     public List<Owner> getAllOwners() {
         return jdbcTemplate.query(SQL_SELECT_ALL_OWNERS, new OwnerMapper());
     }
-
+    
     public static String SQL_SELECT_OWNER_BY_ID = "SELECT * FROM public.\"owners\" AS o "
             + "WHERE o.id = ?";
 
@@ -166,32 +176,53 @@ public class KoreDaoImpl implements KoreDao {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_OWNER_BY_ID, new OwnerMapper(), id);
         } catch (Exception e) {
-            this.logException("Tried to find an owner w/ this id " + id,e);
+            this.logException("Tried to find an owner w/ this id " + id, e);
             return null;
         }
     }
+    
+    /*
+    *  _______  _     _  __    _  _______  ______             _     _  ______    ___  _______  _______ 
+    * |       || | _ | ||  |  | ||       ||    _ |           | | _ | ||    _ |  |   ||       ||       |
+    * |   _   || || || ||   |_| ||    ___||   | ||     ____  | || || ||   | ||  |   ||_     _||    ___|
+    * |  | |  ||       ||       ||   |___ |   |_||_   |____| |       ||   |_||_ |   |  |   |  |   |___ 
+    * |  |_|  ||       ||  _    ||    ___||    __  |         |       ||    __  ||   |  |   |  |    ___|
+    * |       ||   _   || | |   ||   |___ |   |  | |         |   _   ||   |  | ||   |  |   |  |   |___ 
+    * |_______||__| |__||_|  |__||_______||___|  |_|         |__| |__||___|  |_||___|  |___|  |_______|
+    */
+    
+    public static String SQL_INSERT_NEW_OWNER = "INSERT INTO public.\"owners\" (owner) VALUES (?)";
 
+    @Override
+    public void addOwner(Owner owner) {
+        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, owner.getName());
+    }
+
+    @Override
+    public void addOwner(String ownerName) {
+        jdbcTemplate.update(SQL_INSERT_NEW_OWNER, ownerName);
+    }
+    
     @Override
     public void updateOwnerInfo(Owner owner) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
-    
-    public static String SQL_UPDATE_KORE_OWNER = "UPDATE public.\"kore\" AS k "
-            + " SET k.ownerid = ? "
-            + " WHERE k.id = ? ";
     
     @Override
-    public void assignNewOwner(int koreId, int ownerId) {
-        jdbcTemplate.update(SQL_UPDATE_KORE_OWNER, ownerId, koreId);
-    }
-
-    @Override
-    public Owner deleteOwner(int id) {
+    public void deleteOwner(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /*
+    *  __   __  _______  _______  _______  _______  ______    _______ 
+    * |  |_|  ||   _   ||       ||       ||       ||    _ |  |       |
+    * |       ||  |_|  ||    _  ||    _  ||    ___||   | ||  |  _____|
+    * |       ||       ||   |_| ||   |_| ||   |___ |   |_||_ | |_____ 
+    * |       ||       ||    ___||    ___||    ___||    __  ||_____  |
+    * | ||_|| ||   _   ||   |    |   |    |   |___ |   |  | | _____| |
+    * |_|   |_||__| |__||___|    |___|    |_______||___|  |_||_______|
+    */
+    
     private static final class KoreMapper implements RowMapper<Kore> {
 //        CREATE TABLE public.kore
 //        (
@@ -235,6 +266,16 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
 
+    /*
+    *  __   __  _______  ___      _______  _______  ______   
+    * |  | |  ||       ||   |    |       ||       ||    _ |  
+    * |  |_|  ||    ___||   |    |    _  ||    ___||   | ||  
+    * |       ||   |___ |   |    |   |_| ||   |___ |   |_||_ 
+    * |       ||    ___||   |___ |    ___||    ___||    __  |
+    * |   _   ||   |___ |       ||   |    |   |___ |   |  | |
+    * |__| |__||_______||_______||___|    |_______||___|  |_|
+    */
+    
     private void logException(String header, Exception e) {
         System.out.println(" ====================== BGN DAO EXCEPTION LOG ====================== ");
         System.out.println(header);
