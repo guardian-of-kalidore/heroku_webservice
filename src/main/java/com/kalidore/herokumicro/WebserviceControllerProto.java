@@ -113,13 +113,22 @@ public class WebserviceControllerProto {
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.POST)
     public void updateKoreInfo(@PathVariable int id, HttpServletRequest request) {
         try {
+            System.out.println("Logging incoming parameters...");
+            for(String param : request.getParameterMap().keySet()){
+                System.out.print(param + " : ");
+                for( String val : request.getParameterMap().get(param)){
+                    System.out.print(val + " ");
+                }
+                System.out.println("");
+            }
+            
             Kore kore = this.makeKoreFromMap(request);
             Geneology genes = this.getGenesFromMap(request);
             kore.setId(id);
             genes.setKoreId(id);
 
-            System.out.println(kore);
-            System.out.println(genes);
+//            System.out.println(kore);
+//            System.out.println(genes);
             
             if (kore == null) {
                 System.out.println("Something went bad w/ the kore.");
@@ -134,7 +143,7 @@ public class WebserviceControllerProto {
         } catch (Exception e) {
             System.out.println("Problem in the update.");
             System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace().toString());
+            System.out.println(e.getStackTrace());
         }
     }
 
