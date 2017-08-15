@@ -101,10 +101,10 @@ public class WebserviceControllerProto {
      */
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
-    public Kore addNewKore(HttpServletRequest request) {
+    public Kore addNewKore(@RequestBody Map<String, String> data) {
         System.out.println("Creating a new Kore: ");
-        System.out.println(request.getParameterMap().entrySet());
-        Kore kore = this.makeKoreFromMap(request);
+//        System.out.println(request.getParameterMap().entrySet());
+        Kore kore = this.makeKoreFromMap(data);
         dao.addKore(kore);
         return kore;
     }
