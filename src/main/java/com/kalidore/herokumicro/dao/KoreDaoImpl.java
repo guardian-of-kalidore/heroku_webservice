@@ -187,8 +187,8 @@ public class KoreDaoImpl implements KoreDao {
                 kore.getMainPic() , 
                 kore.getOwner() == null ? null : kore.getOwner().getId(),
                 kore.getColor(),
-                genes.getDam() == null ? null : genes.getDamId(),
-                genes.getSire() == null ? null : genes.getSireId(),
+                genes.getDamId() > 0 ? null : genes.getDamId(),
+                genes.getSireId() > 0 ? null : genes.getSireId(),
                 kore.getId());
     }
     
