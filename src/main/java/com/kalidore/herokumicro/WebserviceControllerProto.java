@@ -110,20 +110,20 @@ public class WebserviceControllerProto {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.POST)
-    public void updateKoreInfo(HttpServletRequest request, @PathVariable int id) {
+    @RequestMapping(value = "/kore/update/id/{id}", method = RequestMethod.POST)
+    public void updateKoreInfo(@RequestBody Map<String, String> data, @PathVariable int id) {
         try {
             System.out.println("Logging incoming parameters...");
-            for(String param : request.getParameterMap().keySet()){
+            for(String param : data.keySet()){
                 System.out.print(param + " : ");
-                for( String val : request.getParameterMap().get(param)){
+                for( String val : data.get(param)){
                     System.out.print(val + " ");
                 }
                 System.out.println("");
             }
             
-            Kore kore = this.makeKoreFromMap(request);
-            Geneology genes = this.getGenesFromMap(request);
+            Kore kore = this.makeKoreFromMap(data);
+            Geneology genes = this.getGenesFromMap(data);
             kore.setId(id);
             genes.setKoreId(id);
 
@@ -263,11 +263,11 @@ public class WebserviceControllerProto {
     * |   _   ||   |___ |       ||   |    |   |___ |   |  | |
     * |__| |__||_______||_______||___|    |_______||___|  |_|
      */
-    private Geneology getGenesFromMap(HttpServletRequest request) {
+    private Geneology getGenesFromMap(Map<String, String> data) {
         Geneology genes = new Geneology();
 
         try {
-            int damId = Integer.parseInt(request.getParameter("damId"));
+            int damId = Integer.parseInt(data.get("damId"));
             genes.setDamId(damId);
         } catch (Exception e) {
             System.out.println("No dam.");
@@ -275,7 +275,7 @@ public class WebserviceControllerProto {
         }
 
         try {
-            int sireId = Integer.parseInt(request.getParameter("sireId"));
+            int sireId = Integer.parseInt(data.get("sireId"));
             genes.setSireId(sireId);
         } catch (Exception e) {
             System.out.println("No sire.");
@@ -285,16 +285,16 @@ public class WebserviceControllerProto {
         return genes;
     }
 
-    private Kore makeKoreFromMap(HttpServletRequest request) {
+    private Kore makeKoreFromMap(Map<String, String> data) {
         Kore kore = new Kore();
 
-        String name = request.getParameter("koreName");
-        String newOwner = request.getParameter("newOwner");
-        String ownerId = request.getParameter("ownerId");
+        String name = data.get("koreName");
+        String newOwner = data.get("newOwner");
+        String ownerId = data.get("ownerId");
 
-        String picUrl = request.getParameter("picUrl");
-        String breed = request.getParameter("breed");
-        String color = request.getParameter("color");
+        String picUrl = data.get("picUrl");
+        String breed = data.get("breed");
+        String color = data.get("color");
 
         if (nullOrEmpty(name) || nullOrEmpty(picUrl)) {
             return null;
