@@ -5,6 +5,7 @@
  */
 package com.kalidore.herokumicro.dao;
 
+import com.kalidore.herokumicro.model.Geneology;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
 import java.util.List;
@@ -37,7 +38,8 @@ public interface KoreDao {
     public Owner getOwnerById(int id);
     
     // UPDATE
-    public void updateKoreInfo(Kore kore);
+    public void updateKoreBasicInfo(Kore kore);
+    public void updateKoreInfo(Kore kore, Geneology genes);
     public void updateOwnerInfo(Owner owner);
     
     public void assignNewOwner(int koreId, int ownerId);

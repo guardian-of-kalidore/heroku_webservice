@@ -25,13 +25,5 @@ public class Kore {
     private String mainPic;
     private String thumbNail;
     private Owner owner;
-    
-    public Kore(int id, String name, String mainPic, String ownerName){
-        this.id = id;
-        this.name = name;
-        this.mainPic = mainPic;
-        this.owner = new Owner();
-        this.owner.setName(ownerName);
-        
-    }
+    private String color;
 }

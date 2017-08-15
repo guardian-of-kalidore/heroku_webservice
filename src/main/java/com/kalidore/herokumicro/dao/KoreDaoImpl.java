@@ -151,7 +151,7 @@ public class KoreDaoImpl implements KoreDao {
     *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
      */
 
-    private static String SQL_INSERT_NEW_KORE = "INSERT INTO public.\"kore\" "
+    private static final String SQL_INSERT_NEW_KORE = "INSERT INTO public.\"kore\" "
             + " (name, pic, ownerId) VALUES (?, ?, ?)";
 
     @Override
@@ -162,12 +162,37 @@ public class KoreDaoImpl implements KoreDao {
                 kore.getOwner() == null ? null : kore.getOwner().getId());
     }
 
+    private static final String SQL_UPDATE_KORE_NO_GENES = "UPDATE public.\"kore\" "
+            + " SET name = ? , pic = ? , ownerid = ? , topcolor = ? "
+            + " WHERE id = ?";
+    
     @Override
-    public void updateKoreInfo(Kore kore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateKoreBasicInfo(Kore kore) {
+        jdbcTemplate.update(SQL_UPDATE_KORE_NO_GENES, 
+                kore.getName() , 
+                kore.getMainPic() , 
+                kore.getOwner() == null ? null : kore.getOwner().getId(),
+                kore.getColor(),
+                kore.getId());
     }
 
-    private static String SQL_DELETE_KORE_BY_ID = "DELETE FROM public.\"kore\" "
+    private static final String SQL_UPDATE_KORE_HAS_GENES = "UPDATE public.\"kore\" "
+        + " SET name = ? , pic = ? , ownerid = ? , topcolor = ? , dam = ? , sire = ?"
+        + " WHERE id = ?";
+        
+    @Override
+    public void updateKoreInfo(Kore kore, Geneology genes) {
+        jdbcTemplate.update(SQL_UPDATE_KORE_HAS_GENES, 
+                kore.getName() , 
+                kore.getMainPic() , 
+                kore.getOwner() == null ? null : kore.getOwner().getId(),
+                kore.getColor(),
+                genes.getDam() == null ? null : genes.getDamId(),
+                genes.getSire() == null ? null : genes.getSireId(),
+                kore.getId());
+    }
+    
+    private static final String SQL_DELETE_KORE_BY_ID = "DELETE FROM public.\"kore\" "
             + " WHERE id = ?";
     
     @Override

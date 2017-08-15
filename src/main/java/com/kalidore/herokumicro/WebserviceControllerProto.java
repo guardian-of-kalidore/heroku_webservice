@@ -1,6 +1,7 @@
 package com.kalidore.herokumicro;
 
 import com.kalidore.herokumicro.dao.*;
+import com.kalidore.herokumicro.model.Geneology;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
 import java.sql.Connection;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -113,11 +112,21 @@ public class WebserviceControllerProto {
     }
     
     @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.POST)
-    public Kore updateKoreInfo(@PathVariable int id, @RequestBody Kore kore){
+    public void updateKoreInfo(@PathVariable int id, HttpServletRequest request){
+        Kore kore = this.makeKoreFromMap(request);
+        Geneology genes = this.getGenesFromMap(request);
         kore.setId(id);
-        dao.updateKoreInfo(kore);
-        return kore;
+        genes.setKoreId(id);
+        
+        if(kore == null)
+            return;
+        else if(genes.getDamId() > 0 || genes.getSireId() > 0){
+            dao.updateKoreInfo(kore, genes);
+        } else{
+            dao.updateKoreBasicInfo(kore);
+        }
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -242,6 +251,28 @@ public class WebserviceControllerProto {
     * |__| |__||_______||_______||___|    |_______||___|  |_|
     */
     
+    
+    private Geneology getGenesFromMap(HttpServletRequest request){
+        Geneology genes = new Geneology();
+        
+        try{
+            int damId = Integer.parseInt(request.getParameter("damId"));
+            genes.setDamId(damId);
+        } catch(Exception e){
+            System.out.println("No dam.");
+            genes.setDamId(-1);
+        }
+        
+        try{
+            int sireId = Integer.parseInt(request.getParameter("sireId"));
+            genes.setSireId(sireId);
+        } catch(Exception e){
+            System.out.println("No dam.");
+            genes.setSireId(-1);
+        }
+        
+        return genes;
+    }
     private Kore makeKoreFromMap(HttpServletRequest request){
         Kore kore = new Kore();
         
@@ -267,6 +298,7 @@ public class WebserviceControllerProto {
         
         kore.setName(name);
         kore.setMainPic(picUrl);
+        kore.setColor(color);
         
         return kore;
     }
