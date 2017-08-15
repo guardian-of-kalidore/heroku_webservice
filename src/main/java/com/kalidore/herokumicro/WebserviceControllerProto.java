@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class WebserviceControllerProto {
 
     private KoreDao dao;
-    
+
     public WebserviceControllerProto() {
         dao = new KoreDaoImpl();
     }
@@ -52,20 +52,19 @@ public class WebserviceControllerProto {
     *  |    _  ||       ||   |  | ||   |___          |   |  | ||   |___ |   _   ||       |        
     *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
     * 
-    */
-    
+     */
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Map getKoreById(@PathVariable int id) {
         return dao.getKoreDetails(id);
     }
-    
+
     @RequestMapping(value = "/kore/all", method = RequestMethod.GET)
     @ResponseBody
     public List<Kore> allTheKore() {
         return dao.getAllKore();
     }
-    
+
     @RequestMapping(value = "/kore/owner/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Kore> getKoreByOwnerId(@PathVariable int id) {
@@ -83,13 +82,13 @@ public class WebserviceControllerProto {
     public List<Kore> getKoreByName(@PathVariable String name) {
         return dao.getKoreByName(name);
     }
-    
+
     @ResponseBody
     @RequestMapping(value = "/kore/random", method = RequestMethod.GET)
-    public Kore getRandomKore(){
+    public Kore getRandomKore() {
         return dao.getRandomKore();
     }
-    
+
     /*
     *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
     *  |   | | ||       ||    _ |  |       |         | | _ | ||    _ |  |   ||       ||       |   
@@ -98,43 +97,53 @@ public class WebserviceControllerProto {
     *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
     *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
     *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
-    */
-    
-    
+     */
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
-    public Kore addNewKore(HttpServletRequest request){
+    public Kore addNewKore(HttpServletRequest request) {
         System.out.println("Creating a new Kore: ");
         System.out.println(request.getParameterMap().entrySet());
         Kore kore = this.makeKoreFromMap(request);
         dao.addKore(kore);
         return kore;
     }
-    
+
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.POST)
-    public void updateKoreInfo(@PathVariable int id, HttpServletRequest request){
-        Kore kore = this.makeKoreFromMap(request);
-        Geneology genes = this.getGenesFromMap(request);
-        kore.setId(id);
-        genes.setKoreId(id);
-        
-        if(kore == null)
-            return;
-        else if(genes.getDamId() > 0 || genes.getSireId() > 0){
-            dao.updateKoreInfo(kore, genes);
-        } else{
-            dao.updateKoreBasicInfo(kore);
+    public void updateKoreInfo(@PathVariable int id, HttpServletRequest request) {
+        try {
+            Kore kore = this.makeKoreFromMap(request);
+            Geneology genes = this.getGenesFromMap(request);
+            kore.setId(id);
+            genes.setKoreId(id);
+
+            System.out.println(kore);
+            System.out.println(genes);
+            
+            if (kore == null) {
+                System.out.println("Something went bad w/ the kore.");
+                return;
+            } else if (genes.getDamId() > 0 || genes.getSireId() > 0) {
+                System.out.println("Found some information. Updating heritage too.");
+                dao.updateKoreInfo(kore, genes);
+            } else {
+                System.out.println("Trying to do a basic update.");
+                dao.updateKoreBasicInfo(kore);
+            }
+        } catch (Exception e) {
+            System.out.println("Problem in the update.");
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace().toString());
         }
     }
-    
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}/owner/{ownerId}", method = RequestMethod.PUT)
-    public void updateKoreOwner(@PathVariable int id, @PathVariable int ownerId){
+    public void updateKoreOwner(@PathVariable int id, @PathVariable int ownerId) {
         dao.assignNewOwner(id, ownerId);
     }
-    
+
 
     /*
     *  _______  _     _  __    _  _______  ______             ______    _______  _______  ______       
@@ -144,21 +153,19 @@ public class WebserviceControllerProto {
     * |  |_|  ||       ||  _    ||    ___||    __  |         |    __  ||    ___||       || |_|   |     
     * |       ||   _   || | |   ||   |___ |   |  | |         |   |  | ||   |___ |   _   ||       |     
     * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
-    */
-
-    
+     */
     @RequestMapping(value = "/owner/all", method = RequestMethod.GET)
     @ResponseBody
     public List<Owner> getAllOwners() {
         return dao.getAllOwners();
     }
-    
+
     @RequestMapping(value = "/owner/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Owner getOwnerById(@PathVariable int id) {
         return dao.getOwnerById(id);
     }
-    
+
     /*
     *  _______  _     _  __    _  _______  ______             _     _  ______    ___  _______  _______ 
     * |       || | _ | ||  |  | ||       ||    _ |           | | _ | ||    _ |  |   ||       ||       |
@@ -167,13 +174,11 @@ public class WebserviceControllerProto {
     * |  |_|  ||       ||  _    ||    ___||    __  |         |       ||    __  ||   |  |   |  |    ___|
     * |       ||   _   || | |   ||   |___ |   |  | |         |   _   ||   |  | ||   |  |   |  |   |___ 
     * |_______||__| |__||_|  |__||_______||___|  |_|         |__| |__||___|  |_||___|  |___|  |_______|
-    */
-    
-    
-    
-    @ResponseBody @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler({NoSuchLlamaException.class, BadUserInputException.class, Exception.class})
-    public Map<String, String> processException(Exception e){
+    public Map<String, String> processException(Exception e) {
         Map<String, String> error = new HashMap<>();
         error.put("message", e.getMessage());
         return error;
@@ -187,12 +192,11 @@ public class WebserviceControllerProto {
     * |      _||  |_|  ||  _    ||    ___||   ||   ||  |
     * |     |_ |       || | |   ||   |    |   ||   |_| |
     * |_______||_______||_|  |__||___|    |___||_______|
-    */
-    
+     */
     public static void main(String[] args) throws Exception {
         SpringApplication.run(WebserviceControllerProto.class, args);
     }
-    
+
     @RequestMapping("/testConnection")
     @ResponseBody
     String testConnection() {
@@ -240,7 +244,7 @@ public class WebserviceControllerProto {
 
         return "Try again...";
     }
-    
+
     /*
     *  __   __  _______  ___      _______  _______  ______   
     * |  | |  ||       ||   |    |       ||       ||    _ |  
@@ -249,63 +253,62 @@ public class WebserviceControllerProto {
     * |       ||    ___||   |___ |    ___||    ___||    __  |
     * |   _   ||   |___ |       ||   |    |   |___ |   |  | |
     * |__| |__||_______||_______||___|    |_______||___|  |_|
-    */
-    
-    
-    private Geneology getGenesFromMap(HttpServletRequest request){
+     */
+    private Geneology getGenesFromMap(HttpServletRequest request) {
         Geneology genes = new Geneology();
-        
-        try{
+
+        try {
             int damId = Integer.parseInt(request.getParameter("damId"));
             genes.setDamId(damId);
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("No dam.");
             genes.setDamId(-1);
         }
-        
-        try{
+
+        try {
             int sireId = Integer.parseInt(request.getParameter("sireId"));
             genes.setSireId(sireId);
-        } catch(Exception e){
-            System.out.println("No dam.");
+        } catch (Exception e) {
+            System.out.println("No sire.");
             genes.setSireId(-1);
         }
-        
+
         return genes;
     }
-    private Kore makeKoreFromMap(HttpServletRequest request){
+
+    private Kore makeKoreFromMap(HttpServletRequest request) {
         Kore kore = new Kore();
-        
+
         String name = request.getParameter("koreName");
         String newOwner = request.getParameter("newOwner");
         String ownerId = request.getParameter("ownerId");
-        
+
         String picUrl = request.getParameter("picUrl");
         String breed = request.getParameter("breed");
         String color = request.getParameter("color");
-        
-        if(nullOrEmpty(name) || nullOrEmpty(picUrl))
+
+        if (nullOrEmpty(name) || nullOrEmpty(picUrl)) {
             return null;
-        
-        try{
+        }
+
+        try {
             int id = Integer.parseInt(ownerId);
             Owner o = new Owner();
             o.setId(id);
             kore.setOwner(o);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Bad ownerId.");
         }
-        
+
         kore.setName(name);
         kore.setMainPic(picUrl);
         kore.setColor(color);
-        
+
         return kore;
     }
-    
-    private boolean nullOrEmpty(String testMe){
+
+    private boolean nullOrEmpty(String testMe) {
         return testMe == null || testMe.isEmpty();
     }
-    
 
 }
