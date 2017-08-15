@@ -68,9 +68,12 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
     
-    public static String SQL_SELECT_KORE_DETAILS_ID = "SELECT * FROM public.\"kore\" AS k "
-            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "WHERE k.id = ?";
+    public static String SQL_SELECT_KORE_DETAILS_ID = "SELECT k.*, o.*, s.name as sirename, d.name as damname "
+            + "FROM public.\"kore\" AS k "
+            + " LEFT JOIN public.\"kore\" as s ON k.sire = s.id "
+            + " LEFT JOIN public.\"kore\" as d ON k.dam = d.id "
+            + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + " WHERE k.id = ?";
 
     @Override
     public Map getKoreDetails(int id) {
