@@ -8,6 +8,7 @@ package com.kalidore.herokumicro.dao;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -25,6 +26,7 @@ public interface KoreDao {
     public List<Kore> getKoreByName(String name);
     
     public Kore getKoreById(int id);
+    public Map getKoreDetails(int id);
     public Kore getRandomKore();
     
     public List<Kore> getOwnerKore(Owner owner);

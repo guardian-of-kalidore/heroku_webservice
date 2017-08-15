@@ -5,13 +5,14 @@
  */
 package com.kalidore.herokumicro.dao;
 
+import com.kalidore.herokumicro.model.Geneology;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -63,6 +64,20 @@ public class KoreDaoImpl implements KoreDao {
             return jdbcTemplate.queryForObject(SQL_SELECT_ALL_KORE_BY_KORE_ID, new KoreMapper(), id);
         } catch (Exception e) {
             this.logException("Tried to find a kore w/ this id " + id, e);
+            return null;
+        }
+    }
+    
+    public static String SQL_SELECT_KORE_DETAILS_ID = "SELECT * FROM public.\"kore\" AS k "
+            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + "WHERE k.id = ?";
+
+    @Override
+    public Map getKoreDetails(int id) {
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_KORE_DETAILS_ID, new KoreDetailsMapper(), id);
+        } catch (Exception e) {
+            this.logException("Tried to find a kore details w/ this id " + id, e);
             return null;
         }
     }
@@ -261,7 +276,35 @@ public class KoreDaoImpl implements KoreDao {
             return k;
         }
     }
+    private static final class KoreDetailsMapper implements RowMapper<Map> {
 
+        @Override
+        public Map mapRow(ResultSet rs, int rowNum) throws SQLException {
+            
+            Kore k = new Kore();
+            k.setId(rs.getInt("id"));
+            k.setName(rs.getString("name"));
+            k.setMainPic(rs.getString("pic"));
+            Owner o = new Owner();
+            o.setId(rs.getInt("ownerid"));
+            o.setName(rs.getString("owner"));
+            k.setOwner(o);
+            
+            Geneology g = new Geneology();
+            g.setKoreId(rs.getInt("id"));
+            g.setDam(rs.getString("damname"));
+            g.setSire(rs.getString("sirename"));
+            g.setDamId(rs.getInt("dam"));
+            g.setSireId(rs.getInt("sire"));
+
+            Map m = new HashMap();
+            m.put("kore", k);
+            m.put("heritage", g);
+            return m;
+        }
+    }
+    
+    
     private static final class OwnerMapper implements RowMapper<Owner> {
 //        CREATE TABLE public.kore
 //        (
@@ -279,6 +322,8 @@ public class KoreDaoImpl implements KoreDao {
             return o;
         }
     }
+    
+
 
     /*
     *  __   __  _______  ___      _______  _______  ______   

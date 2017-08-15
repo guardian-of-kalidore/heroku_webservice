@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -56,8 +57,8 @@ public class WebserviceControllerProto {
     
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Kore getKoreById(@PathVariable int id) {
-        return dao.getKoreById(id);
+    public Map getKoreById(@PathVariable int id) {
+        return dao.getKoreDetails(id);
     }
     
     @RequestMapping(value = "/kore/all", method = RequestMethod.GET)
