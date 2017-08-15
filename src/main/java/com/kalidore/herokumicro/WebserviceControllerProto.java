@@ -66,13 +66,13 @@ public class WebserviceControllerProto {
         return dao.getAllKore();
     }
 
-    @RequestMapping(value = "/kore/owner/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/kore/owner/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Kore> getKoreByOwnerId(@PathVariable int id) {
         return dao.getOwnerKore(id);
     }
 
-    @RequestMapping(value = "/kore/owner/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/kore/owner/name/{name}", method = RequestMethod.GET)
     @ResponseBody
     public List<Kore> getKoreByOwnerName(@PathVariable String name) {
         return dao.getOwnerKore(name);
