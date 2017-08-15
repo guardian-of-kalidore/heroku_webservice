@@ -22,25 +22,16 @@ import lombok.Setter;
 public class Kore {
     private int id;
     private String name;
-    private Picture mainPic;
+    private String mainPic;
+    private String thumbNail;
     private Owner owner;
-    private List<Picture> pics = new ArrayList<>();
     
-    public Kore(int id, String name, String mainPicUrl, String ownerName){
+    public Kore(int id, String name, String mainPic, String ownerName){
         this.id = id;
         this.name = name;
-        this.mainPic = new Picture();
-        this.mainPic.setUrl(mainPicUrl);
-        
+        this.mainPic = mainPic;
         this.owner = new Owner();
         this.owner.setName(ownerName);
         
-        this.pics.add(mainPic);
-    }
-    
-    public void setMainPic(String picUrl){
-        this.mainPic = new Picture();
-        this.mainPic.setUrl(picUrl);
-        this.pics.add(mainPic);
     }
 }

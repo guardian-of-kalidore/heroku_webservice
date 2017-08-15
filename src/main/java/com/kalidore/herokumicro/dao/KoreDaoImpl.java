@@ -81,6 +81,20 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
 
+    public static String SQL_SELECT_ALL_KORE_BY_OWNER_NAME = "SELECT * FROM public.\"kore\" AS k "
+            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + "WHERE o.owner LIKE ?";
+
+    @Override
+    public List<Kore> getOwnerKore(String ownerName) {
+        try{
+            return jdbcTemplate.query(SQL_SELECT_ALL_KORE_BY_OWNER_NAME, new KoreMapper(), "%"+ownerName+"%");
+        }  catch (Exception e) {
+            this.logException("Tried to find a bunch of kore w/ this owner " + ownerName, e);
+            return null;
+        }
+    }
+    
     public static String SQL_SELECT_ALL_KORE_BY_OWNER_ID = "SELECT * FROM public.\"kore\" AS k "
             + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
             + "WHERE o.id = ?";
@@ -126,7 +140,7 @@ public class KoreDaoImpl implements KoreDao {
     public void addKore(Kore kore) {
         jdbcTemplate.update(SQL_INSERT_NEW_KORE,
                 kore.getName(),
-                kore.getMainPic() == null ? null : kore.getMainPic().getUrl(),
+                kore.getMainPic() == null ? null : kore.getMainPic(),
                 kore.getOwner() == null ? null : kore.getOwner().getId());
     }
 

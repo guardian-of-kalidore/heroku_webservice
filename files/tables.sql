@@ -13,6 +13,26 @@
 
 -- DROP TABLE public.kore;
 
+CREATE SEQUENCE public.kore_id
+    INCREMENT 1
+    START 1500
+    MINVALUE 1
+    MAXVALUE 100000
+    CACHE 1;
+
+ALTER SEQUENCE public.kore_id
+    OWNER TO hnkhxfwxmhwpvq;
+
+CREATE SEQUENCE public.owner_id
+    INCREMENT 1
+    START 150
+    MINVALUE 1
+    MAXVALUE 1000
+    CACHE 1;
+
+ALTER SEQUENCE public.owner_id
+    OWNER TO hnkhxfwxmhwpvq;
+
 CREATE TABLE public.kore
 (
     id bigint NOT NULL,
