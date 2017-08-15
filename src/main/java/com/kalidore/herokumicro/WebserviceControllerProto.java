@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -115,11 +116,7 @@ public class WebserviceControllerProto {
         try {
             System.out.println("Logging incoming parameters...");
             for(String param : data.keySet()){
-                System.out.print(param + " : ");
-                for( String val : data.get(param)){
-                    System.out.print(val + " ");
-                }
-                System.out.println("");
+                System.out.println(param + " : " + data.get(param));
             }
             
             Kore kore = this.makeKoreFromMap(data);
