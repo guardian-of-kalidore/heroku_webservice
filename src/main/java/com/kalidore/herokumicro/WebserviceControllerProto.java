@@ -111,7 +111,7 @@ public class WebserviceControllerProto {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.POST)
-    public void updateKoreInfo(@PathVariable int id, HttpServletRequest request) {
+    public void updateKoreInfo(HttpServletRequest request, @PathVariable int id) {
         try {
             System.out.println("Logging incoming parameters...");
             for(String param : request.getParameterMap().keySet()){
