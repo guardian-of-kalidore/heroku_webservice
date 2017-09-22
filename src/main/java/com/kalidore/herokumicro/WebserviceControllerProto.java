@@ -181,7 +181,10 @@ public class WebserviceControllerProto {
     * |       ||   _   || | |   ||   |___ |   |  | |         |   _   ||   |  | ||   |  |   |  |   |___ 
     * |_______||__| |__||_|  |__||_______||___|  |_|         |__| |__||___|  |_||___|  |___|  |_______|
      */
-    @RequestMapping(value = "/owner/name/{name}", method = RequestMethod.POST)
+    
+
+    
+    @RequestMapping(value = "/owner/new/{newOwner}", method = RequestMethod.POST)
     @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createOwner(@PathVariable String newOwner) throws BadUserInputException {
         
