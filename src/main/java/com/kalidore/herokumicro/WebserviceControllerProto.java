@@ -192,12 +192,12 @@ public class WebserviceControllerProto {
             throw new BadUserInputException("Please provide name to create new owner.");
         }
         
-        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
-        if(sameOwners == null || sameOwners.isEmpty()){
+//        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
+//        if(sameOwners == null || sameOwners.isEmpty()){
             dao.addOwner(newOwner);
-        } else{
-            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
-        }
+//        } else{
+//            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
+//        }
         
     }
 
