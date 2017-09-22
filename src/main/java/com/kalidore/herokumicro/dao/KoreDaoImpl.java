@@ -182,13 +182,19 @@ public class KoreDaoImpl implements KoreDao {
         
     @Override
     public void updateKoreInfo(Kore kore, Geneology genes) {
+        System.out.println("Updating kore# " + kore.getId()
+            + "with owner# " + (kore.getOwner() == null ? null : kore.getOwner().getId())
+            + "and dam # " + (genes.getDamId() > 0 ? genes.getDamId() : null)
+            + "and sire # " + (genes.getSireId() > 0 ? genes.getSireId() : null)
+        );
+        
         jdbcTemplate.update(SQL_UPDATE_KORE_HAS_GENES, 
                 kore.getName() , 
                 kore.getMainPic() , 
                 kore.getOwner() == null ? null : kore.getOwner().getId(),
                 kore.getColor(),
-                genes.getDamId() > 0 ? null : genes.getDamId(),
-                genes.getSireId() > 0 ? null : genes.getSireId(),
+                genes.getDamId() > 0 ? genes.getDamId() : null,
+                genes.getSireId() > 0 ? genes.getSireId() : null,
                 kore.getId());
     }
     
