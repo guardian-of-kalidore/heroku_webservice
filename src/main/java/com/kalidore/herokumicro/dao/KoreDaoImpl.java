@@ -47,7 +47,9 @@ public class KoreDaoImpl implements KoreDao {
     *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
     * 
      */
-    public static String SQL_SELECT_ALL_KORE = "SELECT * FROM public.\"kore\" AS k LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id";
+    public static String SQL_SELECT_ALL_KORE = "SELECT * FROM public.\"kore\" AS k "
+            + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + " ORDER BY k.name";
 
     @Override
     public List<Kore> getAllKore() {
@@ -100,8 +102,9 @@ public class KoreDaoImpl implements KoreDao {
     }
 
     public static String SQL_SELECT_ALL_KORE_BY_OWNER_NAME = "SELECT * FROM public.\"kore\" AS k "
-            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "WHERE o.owner LIKE ?";
+            + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + " WHERE o.owner LIKE ? "
+            + " ORDER BY k.name";
 
     @Override
     public List<Kore> getOwnerKore(String ownerName) {
@@ -114,8 +117,9 @@ public class KoreDaoImpl implements KoreDao {
     }
     
     public static String SQL_SELECT_ALL_KORE_BY_OWNER_ID = "SELECT * FROM public.\"kore\" AS k "
-            + "LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + "WHERE o.id = ?";
+            + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
+            + " WHERE o.id = ? "
+            + " ORDER BY k.name ";
 
     @Override
     public List<Kore> getOwnerKore(Owner owner) {
@@ -129,7 +133,8 @@ public class KoreDaoImpl implements KoreDao {
     
     public static String SQL_SELECT_ALL_KORE_BY_NAME = "SELECT * FROM public.\"kore\" AS k "
             + " LEFT JOIN public.\"owners\" AS o ON k.ownerid = o.id "
-            + " WHERE k.name LIKE ?";
+            + " WHERE k.name LIKE ? "
+            + " ORDER BY k.name";
 
     @Override
     public List<Kore> getKoreByName(String name) {
@@ -224,7 +229,7 @@ public class KoreDaoImpl implements KoreDao {
     * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
     */
     
-    public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ";
+    public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ORDER BY o.name";
 
     @Override
     public List<Owner> getAllOwners() {
@@ -245,7 +250,8 @@ public class KoreDaoImpl implements KoreDao {
     }
     
     public static String SQL_SELECT_OWNER_BY_NAME = "SELECT * FROM public.\"owners\" AS o "
-            + "WHERE o.name LIKE %?%";
+            + "WHERE o.name LIKE %?% "
+            + "ORDER BY o.name ";
 
     @Override
     public List<Owner> getOwnerByName(String name) {
