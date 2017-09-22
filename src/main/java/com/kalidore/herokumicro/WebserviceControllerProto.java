@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * and open the template in the editor.
  */
 /**
+ * Font's done with http://patorjk.com/software/taag/#p=display&f=Modular
  *
  * @author ahill
  */
@@ -115,10 +116,10 @@ public class WebserviceControllerProto {
     public void updateKoreInfo(@RequestBody Map<String, String> data, @PathVariable int id) {
         try {
             System.out.println("Logging incoming parameters for kore# " + id);
-            for(String param : data.keySet()){
+            for (String param : data.keySet()) {
                 System.out.println(param + " : " + data.get(param));
             }
-            
+
             Kore kore = this.makeKoreFromMap(data);
             Geneology genes = this.getGenesFromMap(data);
             kore.setId(id);
@@ -126,7 +127,6 @@ public class WebserviceControllerProto {
 
 //            System.out.println(kore);
 //            System.out.println(genes);
-            
             if (kore == null) {
                 System.out.println("Something went bad w/ the kore.");
                 return;
@@ -167,7 +167,7 @@ public class WebserviceControllerProto {
     }
 
     @RequestMapping(value = "/owner/id/{id}", method = RequestMethod.GET)
-    @ResponseBody
+    @ResponseBody 
     public Owner getOwnerById(@PathVariable int id) {
         return dao.getOwnerById(id);
     }
@@ -180,6 +180,32 @@ public class WebserviceControllerProto {
     * |  |_|  ||       ||  _    ||    ___||    __  |         |       ||    __  ||   |  |   |  |    ___|
     * |       ||   _   || | |   ||   |___ |   |  | |         |   _   ||   |  | ||   |  |   |  |   |___ 
     * |_______||__| |__||_|  |__||_______||___|  |_|         |__| |__||___|  |_||___|  |___|  |_______|
+     */
+    @RequestMapping(value = "/owner/name/{name}", method = RequestMethod.POST)
+    @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createOwner(@PathVariable String newOwner) throws BadUserInputException {
+        
+        if( newOwner == null || newOwner.isEmpty()){
+            throw new BadUserInputException("Please provide name to create new owner.");
+        }
+        
+        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
+        if(sameOwners == null || sameOwners.isEmpty()){
+            dao.addOwner(newOwner);
+        } else{
+            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
+        }
+        
+    }
+
+    /*
+    *  _______  ______    ______    _______  ______   
+    * |       ||    _ |  |    _ |  |       ||    _ |  
+    * |    ___||   | ||  |   | ||  |   _   ||   | ||  
+    * |   |___ |   |_||_ |   |_||_ |  | |  ||   |_||_ 
+    * |    ___||    __  ||    __  ||  |_|  ||    __  |
+    * |   |___ |   |  | ||   |  | ||       ||   |  | |
+    * |_______||___|  |_||___|  |_||_______||___|  |_|
      */
     @ResponseBody
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

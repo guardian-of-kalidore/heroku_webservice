@@ -28,4 +28,5 @@ public class Kore {
     private String thumbNail;
     private Owner owner;
     private String color;
+    private List<String> tags;
 }

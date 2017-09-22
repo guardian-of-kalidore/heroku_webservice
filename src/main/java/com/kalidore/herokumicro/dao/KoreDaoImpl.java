@@ -244,6 +244,16 @@ public class KoreDaoImpl implements KoreDao {
         }
     }
     
+    public static String SQL_SELECT_OWNER_BY_NAME = "SELECT * FROM public.\"owners\" AS o "
+            + "WHERE o.name LIKE %?%";
+
+    @Override
+    public List<Owner> getOwnerByName(String name) {
+        
+            return jdbcTemplate.query(SQL_SELECT_OWNER_BY_NAME, new OwnerMapper(), name);
+        
+    }
+    
     /*
     *  _______  _     _  __    _  _______  ______             _     _  ______    ___  _______  _______ 
     * |       || | _ | ||  |  | ||       ||    _ |           | | _ | ||    _ |  |   ||       ||       |
@@ -321,6 +331,7 @@ public class KoreDaoImpl implements KoreDao {
             k.setName(rs.getString("name"));
             k.setMainPic(rs.getString("pic"));
             k.setThumbNail(rs.getString("thumbnail"));
+            
             Owner o = new Owner();
             o.setId(rs.getInt("ownerid"));
             o.setName(rs.getString("owner"));

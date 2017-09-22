@@ -36,6 +36,7 @@ public interface KoreDao {
     
     public List<Owner> getAllOwners();
     public Owner getOwnerById(int id);
+    public List<Owner> getOwnerByName(String name);
     
     // UPDATE
     public void updateKoreBasicInfo(Kore kore);
