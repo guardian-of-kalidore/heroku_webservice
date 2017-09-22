@@ -295,6 +295,7 @@ public class KoreDaoImpl implements KoreDao {
             k.setId(rs.getInt("id"));
             k.setName(rs.getString("name"));
             k.setMainPic(rs.getString("pic"));
+            k.setThumbNail(rs.getString("thumbnail"));
 
             Owner o = new Owner();
             o.setId(rs.getInt("ownerid"));
