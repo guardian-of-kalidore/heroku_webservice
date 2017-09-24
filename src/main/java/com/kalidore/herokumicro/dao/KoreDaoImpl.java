@@ -478,7 +478,7 @@ public class KoreDaoImpl implements KoreDao {
         System.out.println(" -------- Message -------- ");
         System.out.println(e.getMessage());
         System.out.println(" -------- Stack Trace -------- ");
-        System.out.println(e.getStackTrace());
+        e.printStackTrace(System.out);
         System.out.println(" ====================== END DAO EXCEPTION LOG ====================== ");
 
     }
