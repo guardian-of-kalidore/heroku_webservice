@@ -55,7 +55,8 @@ public class WebserviceControllerProto {
     *  |    _  ||       ||   |  | ||   |___          |   |  | ||   |___ |   _   ||       |        
     *  |___| |_||_______||___|  |_||_______|         |___|  |_||_______||__| |__||______|    
     * 
-     */
+    */
+    
     @RequestMapping(value = "/kore/id/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Map getKoreById(@PathVariable int id) {
@@ -100,7 +101,8 @@ public class WebserviceControllerProto {
     *  |     |_ |  |_|  ||    __  ||    ___|         |       ||    __  ||   |  |   |  |    ___|   
     *  |    _  ||       ||   |  | ||   |___          |   _   ||   |  | ||   |  |   |  |   |___    
     *  |___| |_||_______||___|  |_||_______|         |__| |__||___|  |_||___|  |___|  |_______|  
-     */
+    */
+    
     @ResponseBody
     @RequestMapping(value = "/kore/new", method = RequestMethod.POST)
     public Kore addNewKore(@RequestBody Map<String, String> data) {
@@ -160,7 +162,8 @@ public class WebserviceControllerProto {
     * |  |_|  ||       ||  _    ||    ___||    __  |         |    __  ||    ___||       || |_|   |     
     * |       ||   _   || | |   ||   |___ |   |  | |         |   |  | ||   |___ |   _   ||       |     
     * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
-     */
+    */
+    
     @RequestMapping(value = "/owner/all", method = RequestMethod.GET)
     @ResponseBody
     public List<Owner> getAllOwners() {
@@ -223,7 +226,8 @@ public class WebserviceControllerProto {
     * |    ___||    __  ||    __  ||  |_|  ||    __  |
     * |   |___ |   |  | ||   |  | ||       ||   |  | |
     * |_______||___|  |_||___|  |_||_______||___|  |_|
-     */
+    */
+    
     @ResponseBody
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler({NoSuchLlamaException.class, BadUserInputException.class, Exception.class})
@@ -241,7 +245,8 @@ public class WebserviceControllerProto {
     * |      _||  |_|  ||  _    ||    ___||   ||   ||  |
     * |     |_ |       || | |   ||   |    |   ||   |_| |
     * |_______||_______||_|  |__||___|    |___||_______|
-     */
+    */
+    
     public static void main(String[] args) throws Exception {
         SpringApplication.run(WebserviceControllerProto.class, args);
     }
