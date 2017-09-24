@@ -5,10 +5,25 @@
  */
 package com.kalidore.herokumicro.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  *
  * @author ahill
  */
+
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Tag {
+    String tagName;
+    int tagId;
     
+    String typeName;
+    int typeId;
 }
