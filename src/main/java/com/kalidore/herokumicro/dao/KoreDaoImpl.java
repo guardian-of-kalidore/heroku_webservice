@@ -194,7 +194,7 @@ public class KoreDaoImpl implements KoreDao {
                 
                 
                 Tag x = tagGroup.get(0);
-                tagMap.put(x.getTypeName(), new ArrayList<>());
+                tagMap.put(x.getTypeName(), tagGroup);
 
             }
 
