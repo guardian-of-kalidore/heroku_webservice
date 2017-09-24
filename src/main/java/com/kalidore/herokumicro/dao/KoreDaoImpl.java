@@ -186,8 +186,13 @@ public class KoreDaoImpl implements KoreDao {
         try {
             tagMap = new HashMap<>();
             List<List<Tag>> tags = jdbcTemplate.query(SQL_SELECT_TAGS_KORE_ID, new SimpleTagMapper(), id);
-
+            System.out.println(tags);
+            
             for (List<Tag> tagGroup : tags) {
+                if(tagGroup.isEmpty())
+                    continue;
+                
+                
                 Tag x = tagGroup.get(0);
                 tagMap.put(x.getTypeName(), new ArrayList<>());
 
