@@ -172,7 +172,7 @@ public class WebserviceControllerProto {
         return dao.getOwnerById(id);
     }
     
-    @RequestMapping(value = "/owner/name/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/owner/name/{name}", method = RequestMethod.GET)
     @ResponseBody 
     public List<Owner> getOwnerByName(@PathVariable String name) {
         return dao.getOwnerByName(name);
