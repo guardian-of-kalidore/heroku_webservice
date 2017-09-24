@@ -457,10 +457,13 @@ public class KoreDaoImpl implements KoreDao {
             String typeName = rs.getString("type");
             String[] tagList = rs.getString("tagids").split(",");
 
+            Tag t;
+            
             for (String tagId : tagList) {
-                Tag t = new Tag();
+                t = new Tag();
                 t.setTagId(Integer.parseInt(tagId.trim()));
                 t.setTypeName(typeName);
+                tags.add(t);
             }
 
             return tags;
