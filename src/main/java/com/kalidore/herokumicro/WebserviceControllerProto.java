@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -175,7 +176,7 @@ public class WebserviceControllerProto {
     @RequestMapping(value = "/owner/name/{name}", method = RequestMethod.GET)
     @ResponseBody 
     public List<Owner> getOwnerByName(@PathVariable String name) {
-        return dao.getOwnerByName(name);
+        return this.getSimilarOwners(name);
     }
 
     /*
@@ -198,13 +199,20 @@ public class WebserviceControllerProto {
             throw new BadUserInputException("Please provide name to create new owner.");
         }
         
-        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
-        if(sameOwners == null || sameOwners.isEmpty()){
+        List<Owner> samishOwners = this.getSimilarOwners(newOwner);
+        if(samishOwners == null || samishOwners.isEmpty()){
             dao.addOwner(newOwner);
         } else{
-            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
+            throw new BadUserInputException("Owner of similar names already exist " + samishOwners.toString());
         }
         
+    }
+    
+    private List<Owner> getSimilarOwners(String nameish){
+        List<Owner> owners = dao.getAllOwners();
+        return owners.stream()
+                .filter( o -> o.getName().contains(nameish))
+                .collect(Collectors.toList());
     }
 
     /*
