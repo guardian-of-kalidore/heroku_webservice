@@ -229,7 +229,7 @@ public class KoreDaoImpl implements KoreDao {
     * |_______||__| |__||_|  |__||_______||___|  |_|         |___|  |_||_______||__| |__||______|     
     */
     
-    public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ORDER BY o.name";
+    public static String SQL_SELECT_ALL_OWNERS = "SELECT * FROM public.\"owners\" AS o ORDER BY o.owner";
 
     @Override
     public List<Owner> getAllOwners() {
@@ -250,8 +250,8 @@ public class KoreDaoImpl implements KoreDao {
     }
     
     public static String SQL_SELECT_OWNER_BY_NAME = "SELECT * FROM public.\"owners\" AS o "
-            + "WHERE o.name LIKE %?% "
-            + "ORDER BY o.name ";
+            + "WHERE o.owner LIKE %?% "
+            + "ORDER BY o.owner ";
 
     @Override
     public List<Owner> getOwnerByName(String name) {

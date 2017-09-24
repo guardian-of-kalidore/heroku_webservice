@@ -171,6 +171,12 @@ public class WebserviceControllerProto {
     public Owner getOwnerById(@PathVariable int id) {
         return dao.getOwnerById(id);
     }
+    
+    @RequestMapping(value = "/owner/name/{id}", method = RequestMethod.GET)
+    @ResponseBody 
+    public List<Owner> getOwnerByName(@PathVariable String name) {
+        return dao.getOwnerByName(name);
+    }
 
     /*
     *  _______  _     _  __    _  _______  ______             _     _  ______    ___  _______  _______ 
@@ -192,12 +198,12 @@ public class WebserviceControllerProto {
             throw new BadUserInputException("Please provide name to create new owner.");
         }
         
-//        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
-//        if(sameOwners == null || sameOwners.isEmpty()){
+        List<Owner> sameOwners = dao.getOwnerByName(newOwner);
+        if(sameOwners == null || sameOwners.isEmpty()){
             dao.addOwner(newOwner);
-//        } else{
-//            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
-//        }
+        } else{
+            throw new BadUserInputException("Owner of similar names already exist " + sameOwners.toString());
+        }
         
     }
 
