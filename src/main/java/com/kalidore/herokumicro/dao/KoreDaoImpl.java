@@ -173,7 +173,7 @@ public class KoreDaoImpl implements KoreDao {
     }
 
     public static String SQL_SELECT_TAGS_KORE_ID = "SELECT * FROM public.\"koreTags\" AS kt "
-            + " WHERE k.id = ? ";
+            + " WHERE kt.kore = ? ";
 
     public Map<String, List<Tag>> getTagsByKore(int id) {
 
