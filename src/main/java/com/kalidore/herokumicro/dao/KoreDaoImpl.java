@@ -313,9 +313,7 @@ public class KoreDaoImpl implements KoreDao {
         try {
             jdbcTemplate.update(SQL_DELETE_KORETAGS_BY_KORE_ID, koreId);
 
-            System.out.println("Trying to update w/ these tags: " + tagsSelected.toString());
-            System.out.println("These are all the tags: ");
-            System.out.println(tags.toString());
+            System.out.println("Trying to update " + koreId+ " w/ these tags: " + tagsSelected.toString());
             
             Map<Integer, String> tagsToAdd = new HashMap<>();
             Tag t;
@@ -339,6 +337,8 @@ public class KoreDaoImpl implements KoreDao {
             for(int groupId : tagsToAdd.keySet()){
                 this.addTagToKore(koreId, groupId, tagsToAdd.get(groupId));
             }
+            
+            System.out.println("Woo! Think it worked.");
             
         } catch (Exception e) {
             this.logException("Tried to update the kore tags of #" + koreId, e);
