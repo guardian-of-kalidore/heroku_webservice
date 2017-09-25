@@ -30,7 +30,6 @@ public class KoreDaoImpl implements KoreDao {
 
     public KoreDaoImpl() {
         jdbcTemplate = new JdbcTemplate();
-        tags = new HashMap<>();
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -39,7 +38,7 @@ public class KoreDaoImpl implements KoreDao {
         dataSource.setPassword(System.getenv("DB_PW"));
 
         jdbcTemplate.setDataSource(dataSource);
-        this.getAllTags();
+        this.populateTags();
     }
 
     /*
@@ -188,11 +187,11 @@ public class KoreDaoImpl implements KoreDao {
     public static String SQL_SELECT_TAGS_KORE_ID = "SELECT * FROM public.\"koreTags\" AS kt "
             + " WHERE kt.kore = ? ";
 
+    private void populateTags() {
+        this.tags = getAllTags();
+    }
+    
     public Map<String, List<Tag>> getTagsByKore(int id) {
-
-        if (tags.isEmpty()) {
-            tags = this.getAllTags();
-        }
 
         Map<String, List<Tag>> tagMap = null;
 
