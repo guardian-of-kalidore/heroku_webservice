@@ -206,6 +206,12 @@ public class KoreDaoImpl implements KoreDao {
                 
                 for(Tag t : tagGroup){
                     
+                    if(this.keyTag(t) == null){
+                        System.out.println("Found a rogue tag" + t.toString());
+                        continue;
+                    }
+                    
+                    
                     Tag x = tags.get(this.keyTag(t));
                     if(x != null){
                         t.setTagName(x.getTagName());
