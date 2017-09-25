@@ -39,6 +39,7 @@ public class KoreDaoImpl implements KoreDao {
         dataSource.setPassword(System.getenv("DB_PW"));
 
         jdbcTemplate.setDataSource(dataSource);
+        this.getAllTags();
     }
 
     /*
