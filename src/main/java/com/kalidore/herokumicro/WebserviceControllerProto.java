@@ -4,6 +4,7 @@ import com.kalidore.herokumicro.dao.*;
 import com.kalidore.herokumicro.model.Geneology;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
+import com.kalidore.herokumicro.model.Tag;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -91,6 +91,12 @@ public class WebserviceControllerProto {
     @RequestMapping(value = "/kore/random", method = RequestMethod.GET)
     public Kore getRandomKore() {
         return dao.getRandomKore();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/tag/all", method = RequestMethod.GET)
+    public List<Tag> getAllTags() {
+        return dao.getAllTags();
     }
 
     /*

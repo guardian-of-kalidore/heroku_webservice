@@ -8,6 +8,7 @@ package com.kalidore.herokumicro.dao;
 import com.kalidore.herokumicro.model.Geneology;
 import com.kalidore.herokumicro.model.Kore;
 import com.kalidore.herokumicro.model.Owner;
+import com.kalidore.herokumicro.model.Tag;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,8 @@ public interface KoreDao {
     public List<Owner> getAllOwners();
     public Owner getOwnerById(int id);
     public List<Owner> getOwnerByName(String name);
+    
+    public List<Tag> getAllTags();
     
     // UPDATE
     public void updateKoreBasicInfo(Kore kore);

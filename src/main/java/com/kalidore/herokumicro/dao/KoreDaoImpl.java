@@ -26,7 +26,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class KoreDaoImpl implements KoreDao {
 
     private JdbcTemplate jdbcTemplate = null;
-    private Map<String, Map<Integer, Tag>> tags;
+    private Map<String, Tag> tags;
 
     public KoreDaoImpl() {
         jdbcTemplate = new JdbcTemplate();
@@ -154,48 +154,65 @@ public class KoreDaoImpl implements KoreDao {
 
     public static String SQL_SELECT_ALL_TAGS = "SELECT * FROM public.\"tags\" AS t ";
 
-    public void populateAllTags() {
+    @Override
+    public List<Tag> getAllTags() {
+        List<Tag> allTags = null;
         try {
-            List<Tag> allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
+            allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
             for (Tag t : allTags) {
 
-                if (!tags.containsKey(t.getTypeName())) {
-                    tags.put(t.getTagName(), new HashMap<>());
-                }
-
-                tags.get(t.getTagName()).put(t.getTagId(), t);
+                tags.put(this.keyTag(t), t);
 
             }
         } catch (Exception e) {
             this.logException("Tried to populate all the kore tags.", e);
         }
-
+        
+        return allTags;
     }
 
+    private String keyTag(Tag x){
+        String key = null;
+        if(x != null && x.getTypeId() > 0 && x.getTypeId() > 0)
+            key = x.getTypeId() + "." + x.getTagId();
+        
+        return key;
+    }
+    
     public static String SQL_SELECT_TAGS_KORE_ID = "SELECT * FROM public.\"koreTags\" AS kt "
             + " WHERE kt.kore = ? ";
 
     public Map<String, List<Tag>> getTagsByKore(int id) {
 
         if (tags.isEmpty()) {
-            this.populateAllTags();
+            this.getAllTags();
         }
 
         Map<String, List<Tag>> tagMap = null;
 
         try {
             tagMap = new HashMap<>();
-            List<List<Tag>> tags = jdbcTemplate.query(SQL_SELECT_TAGS_KORE_ID, new SimpleTagMapper(), id);
-            System.out.println(tags);
+            List<List<Tag>> koreTags = jdbcTemplate.query(SQL_SELECT_TAGS_KORE_ID, new SimpleTagMapper(), id);
+            System.out.println(koreTags);
             
-            for (List<Tag> tagGroup : tags) {
+            for (List<Tag> tagGroup : koreTags) {
                 if(tagGroup.isEmpty())
                     continue;
                 
                 
+                
+                for(Tag t : tagGroup){
+                    
+                    Tag x = tags.get(this.keyTag(t));
+                    if(x != null){
+                        t.setTagName(x.getTagName());
+                        t.setTypeName(x.getTypeName());
+                    }
+                }
+
                 Tag x = tagGroup.get(0);
                 tagMap.put(x.getTypeName(), tagGroup);
-
+                
             }
 
         } catch (Exception e) {
@@ -454,7 +471,8 @@ public class KoreDaoImpl implements KoreDao {
         public List<Tag> mapRow(ResultSet rs, int rowNum) throws SQLException {
             List<Tag> tags = new ArrayList<>();
 
-            String typeName = rs.getString("type");
+            String typeString = rs.getString("type");
+            int typeId = Integer.parseInt(typeString);
             String[] tagList = rs.getString("tagids").split(",");
 
             Tag t;
@@ -462,7 +480,7 @@ public class KoreDaoImpl implements KoreDao {
             for (String tagId : tagList) {
                 t = new Tag();
                 t.setTagId(Integer.parseInt(tagId.trim()));
-                t.setTypeName(typeName);
+                t.setTypeId(typeId);
                 tags.add(t);
             }
 
