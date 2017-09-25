@@ -157,7 +157,7 @@ public class WebserviceControllerProto {
     }
 
     @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.GET)
+    @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.POST)
     public void updateKoreTags(@PathVariable int id, HttpServletRequest req) {
         System.out.println("Updating all ze tags of kore#" + id);
         System.out.println(req.getParameterNames());
