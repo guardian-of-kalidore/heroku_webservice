@@ -95,7 +95,7 @@ public class WebserviceControllerProto {
     
     @ResponseBody
     @RequestMapping(value = "/tag/all", method = RequestMethod.GET)
-    public List<Tag> getAllTags() {
+    public Map getAllTags() {
         return dao.getAllTags();
     }
 

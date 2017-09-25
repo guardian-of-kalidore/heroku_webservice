@@ -39,7 +39,7 @@ public interface KoreDao {
     public Owner getOwnerById(int id);
     public List<Owner> getOwnerByName(String name);
     
-    public List<Tag> getAllTags();
+    public Map getAllTags();
     
     // UPDATE
     public void updateKoreBasicInfo(Kore kore);

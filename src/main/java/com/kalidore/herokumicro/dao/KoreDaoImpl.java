@@ -155,20 +155,21 @@ public class KoreDaoImpl implements KoreDao {
     public static String SQL_SELECT_ALL_TAGS = "SELECT * FROM public.\"tags\" AS t ";
 
     @Override
-    public List<Tag> getAllTags() {
-        List<Tag> allTags = null;
+    public Map getAllTags() {
+        Map<String, Tag> tagMap = null;
         try {
-            allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
+            List<Tag> allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
             for (Tag t : allTags) {
 
-                tags.put(this.keyTag(t), t);
+                tagMap.put(this.keyTag(t), t);
 
             }
+            
         } catch (Exception e) {
             this.logException("Tried to populate all the kore tags.", e);
         }
         
-        return allTags;
+        return tagMap;
     }
 
     private String keyTag(Tag x){
@@ -185,7 +186,7 @@ public class KoreDaoImpl implements KoreDao {
     public Map<String, List<Tag>> getTagsByKore(int id) {
 
         if (tags.isEmpty()) {
-            this.getAllTags();
+            tags = this.getAllTags();
         }
 
         Map<String, List<Tag>> tagMap = null;
