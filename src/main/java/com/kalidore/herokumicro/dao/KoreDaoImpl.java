@@ -155,8 +155,9 @@ public class KoreDaoImpl implements KoreDao {
     public static String SQL_SELECT_ALL_TAGS = "SELECT * FROM public.\"tags\" AS t ";
 
     @Override
-    public Map getAllTags() {
+    public Map<String, Tag> getAllTags() {
         Map<String, Tag> tagMap = new HashMap<>();
+        
         try {
             List<Tag> allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
             
