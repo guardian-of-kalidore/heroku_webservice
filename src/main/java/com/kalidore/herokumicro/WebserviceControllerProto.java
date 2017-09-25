@@ -98,6 +98,8 @@ public class WebserviceControllerProto {
     public Map<String, Tag> getAllTags() {
         return dao.getAllTags();
     }
+    
+
 
     /*
     *  ___   _  _______  ______    _______           _     _  ______    ___  _______  _______    
@@ -153,6 +155,13 @@ public class WebserviceControllerProto {
         }
     }
 
+    @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.GET)
+    public void updateKoreTags(@PathVariable int id, @RequestBody Map<String, String> data) {
+        System.out.println("Updating all ze tags of kore#" + id);
+        System.out.println(data);
+    }
+    
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}/owner/{ownerId}", method = RequestMethod.PUT)
     public void updateKoreOwner(@PathVariable int id, @PathVariable int ownerId) {

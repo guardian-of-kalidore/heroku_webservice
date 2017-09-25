@@ -1,0 +1,13 @@
+-- DELETE FROM public."koreTags" WHERE 1=1;
+-- INSERT INTO public."koreTags" (kore, type, tagids) VALUES (106, 3, '301, 315');
+-- INSERT INTO public."koreTags" (kore, type, tagids) VALUES (106, 1, '104');
+-- SELECT * FROM public."koreTags";
+
+
+-- INSERT INTO public."kore" (id, name, gender) VALUES( 99, 'Dam N/A', 'F');
+-- INSERT INTO public."kore" (id, name, gender) VALUES( 98, 'Sire N/A', 'M');
+
+
+-- UPDATE public."kore" SET dam = 99 WHERE dam IS null;
+-- UPDATE public."kore" SET sire = 98 WHERE sire IS null;
+-- SELECT * FROM public."kore" WHERE dam IS null;

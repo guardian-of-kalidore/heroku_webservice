@@ -1,51 +1,25 @@
-DELETE FROM public.tags WHERE 1 = 1;
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(1 , 'With Foal' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(2 , 'Weanling' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(3 , 'Everfoal' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(4 , 'Koré' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(5 , 'Koros' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(6 , 'Mare' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(7 , 'Stallion' , 'Descriptor' , 0);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(8 , 'Foundation' , 'Descriptor' , 0);
+DELETE FROM public."tags" WHERE 1=1;
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(101 , 'With Foal' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(102 , 'Weanling' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(103 , 'Everfoal' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(104 , 'Koré' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(105 , 'Koros' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(106 , 'Mare' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(107 , 'Stallion' , 'Descriptor' , 1);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(108 , 'Foundation' , 'Descriptor' , 1);
 
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(101 , 'Unikoré' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(102 , 'Mesopippen' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(103 , 'Nordenhjørn' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(104 , 'Aviquinn' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(105 , 'Torègarde' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(106 , 'Tang' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(107 , '(Tank)' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(108 , 'Alicorn' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(109 , 'Avipippen' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(110 , 'Avinorden' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(111 , 'Mesotore' , 'Breed' , 1);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(112 , 'Hybrid' , 'Breed' , 1);
-
-
-
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(201 , 'Imperial Blue' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(202 , 'Pale Amber' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(203 , 'Rose Blush' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(204 , 'Countershade' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(205 , 'Starburst' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(206 , 'Mottle' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(207 , 'Brindle' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(208 , 'Moonstone' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(209 , 'Celestial' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(210 , 'Aurora ' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(211 , 'Jade' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(212 , 'Gypsy' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(213 , 'Silverfade' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(214 , 'Sikelia' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(215 , 'Passion’s Flame' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(216 , 'Twinning ' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(217 , 'Sunstone' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(218 , 'Pebble of Youth' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(219 , 'Probability ' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(220 , 'Kal’s Blessing' , 'Stone' , 2);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(221 , 'Kaedon’s Consent' , 'Stone' , 2);
-
-
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(201 , 'Unikoré' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(202 , 'Mesopippen' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(203 , 'Nordenhjørn' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(204 , 'Aviquinn' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(205 , 'Torègarde' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(206 , 'Tang' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(207 , '(Tank)' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(208 , 'Alicorn' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(209 , 'Avipippen' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(210 , 'Avinorden' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(211 , 'Mesotore' , 'Breed' , 2);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(212 , 'Hybrid' , 'Breed' , 2);
 
 
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(301 , 'Black' , 'Genetics' , 3);
@@ -66,45 +40,42 @@ INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(315 , 'Appaloosa'
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(316 , 'Grey' , 'Genetics' , 3);
 
 
-
-
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(401 , 'Liver' , 'Color' , 4);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(402 , 'Sorrel' , 'Color' , 4);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(403 , 'Flaxen' , 'Color' , 4);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(404 , 'Sooty' , 'Color' , 4);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(405 , 'Wild Bay' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(406 , 'Palomino' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(407 , 'Buckskin' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(408 , 'Cremello' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(409 , 'Perlino' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(410 , 'Smokey Black' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(411 , 'Smokey Cream' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(412 , 'Grullo' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(413 , 'Classic Dun' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(414 , 'Red Dun' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(415 , 'Dunskin' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(416 , 'Dunalino' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(417 , 'Silver Dapple' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(418 , 'Silver Bay' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(419 , 'Silver Dun' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(420 , 'Silver Grullo' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(421 , 'Blanket Appaloosa' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(422 , 'Leopard ' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(423 , 'Varnish' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(424 , 'Snowflake' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(425 , 'Frost' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(426 , 'Few Spot' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(427 , 'Pintaloosa' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(428 , 'Dapple Grey' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(429 , 'Rose Grey' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(430 , 'Steel Grey' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(431 , 'Mulberry Grey' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(432 , 'Fleabitten ' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(433 , 'Champagne' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(434 , 'Wedgwood ' , 'Color' , 4);
-INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(435 , 'Fantasy' , 'Color' , 4);
-
-
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(406 , 'Seal Bay' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(407 , 'Palomino' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(408 , 'Buckskin' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(409 , 'Cremello' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(410 , 'Perlino' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(411 , 'Smokey Black' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(412 , 'Smokey Cream' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(413 , 'Grullo' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(414 , 'Classic Dun' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(415 , 'Red Dun' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(416 , 'Dunskin' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(417 , 'Dunalino' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(418 , 'Silver Dapple' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(419 , 'Silver Bay' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(420 , 'Silver Dun' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(421 , 'Silver Grullo' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(422 , 'Blanket Appaloosa' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(423 , 'Leopard ' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(424 , 'Varnish' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(425 , 'Snowflake' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(426 , 'Frost' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(427 , 'Few Spot' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(428 , 'Pintaloosa' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(429 , 'Dapple Grey' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(430 , 'Rose Grey' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(431 , 'Steel Grey' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(432 , 'Mulberry Grey' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(433 , 'Fleabitten ' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(434 , 'Champagne' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(435 , 'Wedgwood ' , 'Color' , 4);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(436 , 'Fantasy' , 'Color' , 4);
 
 
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(501 , 'Winter Celebration' , 'Event' , 5);
@@ -112,3 +83,28 @@ INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(502 , 'Birthday B
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(503 , 'Harvest Festival' , 'Event' , 5);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(504 , 'Winter Solstice' , 'Event' , 5);
 INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(505 , 'RP Quest' , 'Event' , 5);
+
+
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(601 , 'Imperial Blue' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(602 , 'Pale Amber' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(603 , 'Rose Blush' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(604 , 'Countershade' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(605 , 'Starburst' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(606 , 'Mottle' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(607 , 'Brindle' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(608 , 'Moonstone' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(609 , 'Celestial' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(610 , 'Aurora ' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(611 , 'Jade' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(612 , 'Gypsy' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(613 , 'Silverfade' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(614 , 'Sikelia' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(615 , 'Passion’s Flame' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(616 , 'Twinning ' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(617 , 'Sunstone' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(618 , 'Pebble of Youth' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(619 , 'Probability ' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(620 , 'Kal’s Blessing' , 'Stone' , 6);
+INSERT INTO public.tags (id, tagname, typename, typeid) VALUES(621 , 'Kaedon’s Consent' , 'Stone' , 6);
+
+SELECT * FROM public."tags";
