@@ -158,7 +158,7 @@ public class WebserviceControllerProto {
 
     @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.POST)
-    public void updateKoreTags(@PathVariable int id, Map<String, List<String>> data) {
+    public void updateKoreTags(@PathVariable int id, @RequestBody Map<String, List<String>> data) {
         System.out.println("Updating all ze tags of kore#" + id);
         System.out.println(data.toString());
         
@@ -166,7 +166,7 @@ public class WebserviceControllerProto {
     
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}/owner/{ownerId}", method = RequestMethod.PUT)
-    public void updateKoreOwner(@PathVariable int id, @PathVariable int ownerId) {
+    public void updateKoreOwner(@PathVariable int id, @RequestBody int ownerId) {
         dao.assignNewOwner(id, ownerId);
     }
 
