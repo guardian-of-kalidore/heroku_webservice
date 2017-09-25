@@ -313,11 +313,19 @@ public class KoreDaoImpl implements KoreDao {
         try {
             jdbcTemplate.update(SQL_DELETE_KORETAGS_BY_KORE_ID, koreId);
 
+            System.out.println("Trying to update w/ these tags: " + tagsSelected.toString());
+            System.out.println("These are all the tags: ");
+            System.out.println(tags.toString());
+            
             Map<Integer, String> tagsToAdd = new HashMap<>();
             Tag t;
             String tagGroup;
             for (String tag : tagsSelected) {
                 t = tags.get(tag);
+                
+                if(t == null)
+                    continue;
+                
                 tagGroup = tagsToAdd.get(t.getTypeId());
                 
                 if(tagGroup == null){
