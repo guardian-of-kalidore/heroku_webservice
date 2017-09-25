@@ -160,7 +160,12 @@ public class WebserviceControllerProto {
     @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.POST)
     public void updateKoreTags(@PathVariable int id, @RequestBody Map<String, List<String>> data) {
         System.out.println("Updating all ze tags of kore#" + id);
-        System.out.println(data.toString());
+        if(id > 0 && data != null && !data.isEmpty() && data.containsKey("tagsSelected")){
+            dao.updateKoreTags(id, data.get("tagsSelected"));
+        }else{
+            System.out.println("Someone told me to update, but they gave me bad data.");
+        }
+                
         
     }
     
@@ -170,6 +175,8 @@ public class WebserviceControllerProto {
         dao.assignNewOwner(id, ownerId);
     }
 
+    
+    
 
     /*
     *  _______  _     _  __    _  _______  ______             ______    _______  _______  ______       

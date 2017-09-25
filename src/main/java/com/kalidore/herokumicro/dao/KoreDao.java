@@ -47,6 +47,7 @@ public interface KoreDao {
     public void updateOwnerInfo(Owner owner);
     
     public void assignNewOwner(int koreId, int ownerId);
+    public void updateKoreTags(int koreId, List<String> tagsSelected);
     
     // DELETE
     public void deleteKore(int id);

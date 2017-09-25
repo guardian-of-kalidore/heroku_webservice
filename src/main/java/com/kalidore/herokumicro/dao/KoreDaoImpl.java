@@ -157,31 +157,33 @@ public class KoreDaoImpl implements KoreDao {
     @Override
     public Map<String, Tag> getAllTags() {
         Map<String, Tag> tagMap = new HashMap<>();
-        
+
         try {
             List<Tag> allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
-            
+
             for (Tag t : allTags) {
-                if(this.keyTag(t) != null)
+                if (this.keyTag(t) != null) {
                     tagMap.put(this.keyTag(t), t);
+                }
 
             }
-            
+
         } catch (Exception e) {
             this.logException("Tried to populate all the kore tags.", e);
         }
-        
+
         return tagMap;
     }
 
-    private String keyTag(Tag x){
+    private String keyTag(Tag x) {
         String key = null;
-        if(x != null && x.getTypeId() > 0 && x.getTypeId() > 0)
+        if (x != null && x.getTypeId() > 0 && x.getTypeId() > 0) {
             key = x.getTypeId() + "." + x.getTagId();
-        
+        }
+
         return key;
     }
-    
+
     public static String SQL_SELECT_TAGS_KORE_ID = "SELECT * FROM public.\"koreTags\" AS kt "
             + " WHERE kt.kore = ? ";
 
@@ -197,23 +199,21 @@ public class KoreDaoImpl implements KoreDao {
             tagMap = new HashMap<>();
             List<List<Tag>> koreTags = jdbcTemplate.query(SQL_SELECT_TAGS_KORE_ID, new SimpleTagMapper(), id);
             System.out.println(koreTags);
-            
+
             for (List<Tag> tagGroup : koreTags) {
-                if(tagGroup.isEmpty())
+                if (tagGroup.isEmpty()) {
                     continue;
-                
-                
-                
-                for(Tag t : tagGroup){
-                    
-                    if(this.keyTag(t) == null){
+                }
+
+                for (Tag t : tagGroup) {
+
+                    if (this.keyTag(t) == null) {
                         System.out.println("Found a rogue tag" + t.toString());
                         continue;
                     }
-                    
-                    
+
                     Tag x = tags.get(this.keyTag(t));
-                    if(x != null){
+                    if (x != null) {
                         t.setTagName(x.getTagName());
                         t.setTypeName(x.getTypeName());
                     }
@@ -221,7 +221,7 @@ public class KoreDaoImpl implements KoreDao {
 
                 Tag x = tagGroup.get(0);
                 tagMap.put(x.getTypeName(), tagGroup);
-                
+
             }
 
         } catch (Exception e) {
@@ -303,6 +303,48 @@ public class KoreDaoImpl implements KoreDao {
     public void assignNewOwner(int koreId, int ownerId) {
         jdbcTemplate.update(SQL_UPDATE_KORE_OWNER, ownerId, koreId);
     }
+
+    private static final String SQL_DELETE_KORETAGS_BY_KORE_ID = "DELETE FROM public.\"koreTags\" "
+            + " WHERE kore = ?";
+    
+    
+
+    public void updateKoreTags(int koreId, List<String> tagsSelected) {
+        try {
+            jdbcTemplate.update(SQL_DELETE_KORETAGS_BY_KORE_ID, koreId);
+
+            Map<Integer, String> tagsToAdd = new HashMap<>();
+            Tag t;
+            String tagGroup;
+            for (String tag : tagsSelected) {
+                t = tags.get(tag);
+                tagGroup = tagsToAdd.get(t.getTypeId());
+                
+                if(tagGroup == null){
+                    tagsToAdd.put(t.getTypeId(), t.getTagId()+"");
+                }else{
+                    tagsToAdd.put(t.getTypeId(), tagGroup + " , " + t.getTagId());
+                }
+                
+            }
+            
+            for(int groupId : tagsToAdd.keySet()){
+                this.addTagToKore(koreId, groupId, tagsToAdd.get(groupId));
+            }
+            
+        } catch (Exception e) {
+            this.logException("Tried to update the kore tags of #" + koreId, e);
+        }
+    }
+    
+    private static final String SQL_INSERT_KORE_TAGS = "INSERT INTO public.\"koreTags\" "
+            + " (kore, type, tagids) VALUES "
+            + " (?, ?, ?) ";
+        
+    public void addTagToKore(int koreId, int typeId, String tags){
+        jdbcTemplate.update(SQL_INSERT_KORE_TAGS, koreId, typeId, tags);
+    }
+    
     /*
     *  _______  _     _  __    _  _______  ______             ______    _______  _______  ______       
     * |       || | _ | ||  |  | ||       ||    _ |           |    _ |  |       ||   _   ||      |      
@@ -485,7 +527,7 @@ public class KoreDaoImpl implements KoreDao {
             String[] tagList = rs.getString("tagids").split(",");
 
             Tag t;
-            
+
             for (String tagId : tagList) {
                 t = new Tag();
                 t.setTagId(Integer.parseInt(tagId.trim()));
