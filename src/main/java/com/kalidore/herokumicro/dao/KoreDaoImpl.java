@@ -156,11 +156,9 @@ public class KoreDaoImpl implements KoreDao {
 
     @Override
     public Map getAllTags() {
-        Map<String, Tag> tagMap = null;
+        Map<String, Tag> tagMap = new HashMap<>();
         try {
             List<Tag> allTags = jdbcTemplate.query(SQL_SELECT_ALL_TAGS, new TagMapper());
-            
-            tagMap = new HashMap<>();
             
             for (Tag t : allTags) {
 
