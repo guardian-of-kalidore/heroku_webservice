@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -157,9 +158,10 @@ public class WebserviceControllerProto {
 
     @ResponseBody @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/kore/id/{id}/tags", method = RequestMethod.GET)
-    public void updateKoreTags(@PathVariable int id, @RequestBody Map<String, List<String>> data) {
+    public void updateKoreTags(@PathVariable int id, HttpServletRequest req) {
         System.out.println("Updating all ze tags of kore#" + id);
-        System.out.println(data);
+        System.out.println(req.getParameterNames());
+        System.out.println(req.getAttributeNames());
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)
